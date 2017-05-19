@@ -1,0 +1,8 @@
+break-blocks
+style=java
+indent-switches
+keep-one-line-blocks
+keep-one-line-statements
+pad-oper
+unpad-paren
+suffix=none
