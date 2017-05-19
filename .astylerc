@@ -1,6 +1,7 @@
 break-blocks
 style=java
 indent-switches
+indent-namespaces
 keep-one-line-blocks
 keep-one-line-statements
 pad-oper
