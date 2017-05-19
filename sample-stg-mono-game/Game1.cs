@@ -69,7 +69,8 @@ namespace sample_stg_mono_game {
             debug += "y: " + input.y + "\n";
             debug += "shot: " + input.GetAction(Input.Action.shot) + "\n";
 
-            test += input.vector;
+            test += input.normalizedVector * 5;
+            debug += "shot: " + input.normalizedVector + "\n";
 
 
 

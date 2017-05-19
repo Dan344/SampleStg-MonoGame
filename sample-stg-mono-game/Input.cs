@@ -70,9 +70,12 @@ public class Input {
         get { return new Vector2(x, y); }
     }
 
-    /// <summary>xy方向の入力を取得(単位ベクトル)</summary>
+    /// <summary>xy方向の入力を取得(単位ベクトル)。vectorが0の時は0</summary>
     public Vector2 normalizedVector {
-        get { return Vector2.Normalize(vector); }
+        get {
+            Vector2 v = vector;
+            return v == Vector2.Zero ? v : Vector2.Normalize(vector);
+        }
     }
 
     /// <summary>当該のアクションに必要なボタンが入力されているかを取得</summary>
