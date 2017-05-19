@@ -39,8 +39,6 @@ namespace sample_stg_mono_game {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             debugFont = Content.Load<SpriteFont>("Debug");
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -52,6 +50,7 @@ namespace sample_stg_mono_game {
         }
 
         string debug;
+        Vector2 test = Vector2.Zero;
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -59,14 +58,20 @@ namespace sample_stg_mono_game {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
+            //入力の状態を更新する
             input.Update();
 
+            //escキーが押されたら終了する
             if(input.exit) Exit();
 
             debug = "";
             debug += "x: " + input.x + "\n";
             debug += "y: " + input.y + "\n";
             debug += "shot: " + input.GetAction(Input.Action.shot) + "\n";
+
+            test += input.vector;
+
+
 
             base.Update(gameTime);
         }
@@ -79,7 +84,7 @@ namespace sample_stg_mono_game {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(debugFont, debug, test, Color.White);
 
             spriteBatch.End();
 

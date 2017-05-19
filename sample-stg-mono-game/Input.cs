@@ -54,11 +54,11 @@ public class Input {
             float result = 0;
 
             if(state.IsKeyDown(upKey)) {
-                result += 1;
+                result -= 1;
             }
 
             if(state.IsKeyDown(downKey)) {
-                result -= 1;
+                result += 1;
             }
 
             return result;
