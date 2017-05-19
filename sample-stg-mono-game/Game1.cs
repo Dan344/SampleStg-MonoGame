@@ -9,6 +9,8 @@ namespace sample_stg_mono_game {
 public class Game1 : Game {
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
+    Input input;
+    SpriteFont debugFont;
 
     public Game1() {
         graphics = new GraphicsDeviceManager(this);
@@ -22,7 +24,7 @@ public class Game1 : Game {
     /// and initialize them as well.
     /// </summary>
     protected override void Initialize() {
-        // TODO: Add your initialization logic here
+        input = new Input();
 
         base.Initialize();
     }
@@ -34,6 +36,7 @@ public class Game1 : Game {
     protected override void LoadContent() {
         // Create a new SpriteBatch, which can be used to draw textures.
         spriteBatch = new SpriteBatch(GraphicsDevice);
+        debugFont = Content.Load<SpriteFont>("Debug");
 
         // TODO: use this.Content to load your game content here
     }
@@ -46,16 +49,22 @@ public class Game1 : Game {
         // TODO: Unload any non ContentManager content here
     }
 
+    string debug;
+
     /// <summary>
     /// Allows the game to run logic such as updating the world,
     /// checking for collisions, gathering input, and playing audio.
     /// </summary>
     /// <param name="gameTime">Provides a snapshot of timing values.</param>
     protected override void Update(GameTime gameTime) {
-        if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
+        input.Update();
 
-        // TODO: Add your update logic here
+        if(input.exit) Exit();
+
+        debug = "";
+        debug += "x: " + input.x + "\n";
+        debug += "y: " + input.y + "\n";
+        debug += "shot: " + input.GetAction(Input.Action.shot) + "\n";
 
         base.Update(gameTime);
     }
@@ -66,8 +75,11 @@ public class Game1 : Game {
     /// <param name="gameTime">Provides a snapshot of timing values.</param>
     protected override void Draw(GameTime gameTime) {
         GraphicsDevice.Clear(Color.CornflowerBlue);
+        spriteBatch.Begin();
 
-        // TODO: Add your drawing code here
+        spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);
+
+        spriteBatch.End();
 
         base.Draw(gameTime);
     }
