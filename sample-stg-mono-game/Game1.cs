@@ -15,6 +15,9 @@ public class Game1 : Game {
     public Game1() {
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
+
+        graphics.PreferredBackBufferWidth = 1024;
+        graphics.PreferredBackBufferHeight = 768;
     }
 
     /// <summary>
@@ -25,7 +28,6 @@ public class Game1 : Game {
     /// </summary>
     protected override void Initialize() {
         input = new Input();
-
         base.Initialize();
     }
 
