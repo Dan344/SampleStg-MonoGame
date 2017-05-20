@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Diagnostics;
 
 namespace sample_stg_mono_game {
     /// <summary>
@@ -10,7 +12,9 @@ namespace sample_stg_mono_game {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Input input;
+        ObjectPool pool;
         SpriteFont debugFont;
+        Texture2D sampleTexture;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -18,6 +22,8 @@ namespace sample_stg_mono_game {
 
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
+
+            Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
         }
 
         /// <summary>
@@ -27,8 +33,11 @@ namespace sample_stg_mono_game {
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize() {
-            input = new Input();
             base.Initialize();
+
+            input = Input.instance;
+            pool = ObjectPool.instance;
+            new Player();
         }
 
         /// <summary>
@@ -39,6 +48,8 @@ namespace sample_stg_mono_game {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             debugFont = Content.Load<SpriteFont>("Debug");
+
+            sampleTexture = Content.Load<Texture2D>("Sprite/ArrowBullet");
         }
 
         /// <summary>
@@ -46,7 +57,7 @@ namespace sample_stg_mono_game {
         /// game-specific content.
         /// </summary>
         protected override void UnloadContent() {
-            // TODO: Unload any non ContentManager content here
+            Content.Unload();
         }
 
         string debug;
@@ -68,11 +79,10 @@ namespace sample_stg_mono_game {
             debug += "x: " + input.x + "\n";
             debug += "y: " + input.y + "\n";
             debug += "shot: " + input.GetAction(Input.Action.shot) + "\n";
-
-            test += input.normalizedVector * 5;
             debug += "shot: " + input.normalizedVector + "\n";
 
-
+            pool.player.sprite = sampleTexture;
+            pool.player.Update();
 
             base.Update(gameTime);
         }
@@ -85,7 +95,8 @@ namespace sample_stg_mono_game {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(debugFont, debug, test, Color.White);
+            spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);
+            pool.player.Draw(spriteBatch);
 
             spriteBatch.End();
 

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-public class Input {
+public class Input : Singleton<Input> {
     Keys upKey     = Keys.W;
     Keys leftKey   = Keys.A;
     Keys downKey   = Keys.S;
@@ -14,6 +14,7 @@ public class Input {
     Keys ExitKey   = Keys.Escape;
 
     KeyboardState state;
+
 
     public Input() {
         state = Keyboard.GetState();
