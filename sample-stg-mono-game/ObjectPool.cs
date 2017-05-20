@@ -24,16 +24,20 @@ public class ObjectPool : Singleton<ObjectPool> {
     }
 
     public void Initialize() {
-        player = new Player { position = new Vector2(200, 200)
-        , sprite = sampleTexture
-                              , spriteColor = Color.Green
-                            };
+        player = new Player {
+            position = new Vector2(200, 200),
+            sprite = sampleTexture,
+            spriteColor = Color.Green
+        };
 
         for(int i = 0; i < 10; ++i) {
-            enemys.Add(new Enemy { position = new Vector2(100 * (i + 1), 300)
-            , sprite = sampleTexture
-                                   , spriteColor = Color.Red
-                                 });
+            enemys.Add(
+            new Enemy {
+                position = new Vector2(100 * (i + 1), 300),
+                sprite = sampleTexture,
+                spriteColor = Color.Red
+            }
+            );
         }
     }
 
