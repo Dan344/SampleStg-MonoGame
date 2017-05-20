@@ -7,7 +7,7 @@ public class Enemy : CollisionObject {
 
     }
 
-    public void Hit() {
-
+    public override void HitAction(CollisionObject other) {
+        base.HitAction(other);
     }
 }

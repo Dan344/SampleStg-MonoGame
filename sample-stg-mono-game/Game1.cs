@@ -52,8 +52,10 @@ namespace sample_stg_mono_game {
 
             pool.Initialize();
 
-            pool.WakeUp(pool.player);
-            pool.WakeUp(pool.enemys);
+            Player p = pool.WakeUp(pool.player);
+            p.position = new Vector2(200, 200);
+            Enemy e = pool.WakeUp(pool.enemys) as Enemy;
+            e.position = new Vector2(100, 100);
         }
 
         /// <summary>
@@ -85,6 +87,7 @@ namespace sample_stg_mono_game {
             debug += "shot: " + input.GetAction(Input.Action.shot) + "\n";
             debug += "shot: " + input.normalizedVector + "\n";
 
+            pool.HitObjects(pool.player, pool.enemys);
             pool.player.Update();
 
             base.Update(gameTime);

@@ -24,7 +24,8 @@ public class Player : CollisionObject {
     }
 
     public override void HitAction(CollisionObject other) {
-
+        Debug.WriteLine("hogeeeeeeeeeee");
+        base.HitAction(other);
     }
 
     /// <summary>

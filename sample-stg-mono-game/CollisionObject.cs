@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 /// <summary>
 /// 当たり判定を持つオブジェクト
@@ -16,8 +17,10 @@ public class CollisionObject : GameObject {
     }
 
     public bool CollisionCheck(CollisionObject other) {
-        collisionArea.Offset(position);
-        other.collisionArea.Offset(other.position);
+        collisionArea.Location = new Point((int)position.X, (int)position.Y);
+        other.collisionArea.Location = new Point((int)other.position.X, (int)other.position.Y);
+
+        Debug.WriteLine("piyoooooooooooooooo");
 
         if(collisionArea.Intersects(other.collisionArea)) {
             return true;

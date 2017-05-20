@@ -28,6 +28,8 @@ public class GameObject {
     /// <summary>gameObjectが現在無効になっているか</summary>
     public bool isActive { get { return _isActive; } }
 
+    SpriteFont debugFont;
+
     public GameObject() {
         _isActive = false;
         sprite = null;
@@ -71,6 +73,8 @@ public class GameObject {
                          , spriteFlip
                          , spriteDepth
                         );
+
+        //spriteBatch.DrawString(debugFont, position, position, Color.White);
     }
 
     /// <summary>
