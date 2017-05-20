@@ -54,13 +54,17 @@ public class GameObject {
         parent = null;
     }
 
+    /// <summary>
+    /// 適切な場所で呼ぶと描画を行う
+    /// </summary>
+    /// <param name="spriteBatch"></param>
     public void Draw(SpriteBatch spriteBatch) {
         spriteBatch.Draw(sprite
                          , position
                          , null
                          , spriteColor
                          , rotation
-                         , Vector2.Zero
+                         , new Vector2(sprite.Width / 2, sprite.Height / 2) //pivot
                          , scale
                          , spriteFlip
                          , spriteDepth

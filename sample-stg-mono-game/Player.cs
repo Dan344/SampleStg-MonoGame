@@ -10,7 +10,7 @@ public class Player : CollisionObject {
     protected Input input;
     public Player() {
         input = Input.instance;
-        Debug.WriteLine(input);
+        //Debug.WriteLine(input);
     }
 
     /// <summary>
@@ -20,7 +20,9 @@ public class Player : CollisionObject {
         ControleMove();
     }
 
-    public void Hit() { }
+    public void Hit<T>(T other) where T : GameObject {
+
+    }
 
     /// <summary>
     /// ユーザの入力に応じて移動する
