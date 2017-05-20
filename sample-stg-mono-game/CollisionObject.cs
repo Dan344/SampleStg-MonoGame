@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 /// 当たり判定を持つオブジェクト
 /// </summary>
 public class CollisionObject : GameObject {
+    //public int hp=1;
+    //public int power=1;
+
     Rectangle collisionArea;
 
     public CollisionObject() : base() {
@@ -21,5 +24,9 @@ public class CollisionObject : GameObject {
         } else {
             return false;
         }
+    }
+
+    public virtual void HitAction(CollisionObject other) {
+        Sleep();
     }
 }

@@ -40,12 +40,12 @@ public class GameObject {
     }
 
     /// <summary>poolに寝かす時の設定</summary>
-    public virtual void SleepInit() {
+    public virtual void Sleep() {
         _isActive = false;
     }
 
     /// <summary>poolから起こす時の初期化</summary>
-    public virtual void WakeUpInit() {
+    public virtual void WakeUp() {
         _isActive = true;
         spriteColor = Color.White;
         position = Vector2.Zero;
@@ -59,6 +59,8 @@ public class GameObject {
     /// </summary>
     /// <param name="spriteBatch"></param>
     public void Draw(SpriteBatch spriteBatch) {
+        if(!isActive) return;
+
         spriteBatch.Draw(sprite
                          , position
                          , null

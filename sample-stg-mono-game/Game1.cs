@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace sample_stg_mono_game {
     /// <summary>
@@ -23,7 +24,21 @@ namespace sample_stg_mono_game {
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
 
+            input = Input.instance;
+            pool = ObjectPool.instance;
+
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+        }
+
+        /// <summary>
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
+        /// </summary>
+        protected override void LoadContent() {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            debugFont = Content.Load<SpriteFont>("Debug");
+            sampleTexture = Content.Load<Texture2D>("Sprite/ArrowBullet");
+            pool.LoadContent(Content);
         }
 
         /// <summary>
@@ -35,21 +50,10 @@ namespace sample_stg_mono_game {
         protected override void Initialize() {
             base.Initialize();
 
-            input = Input.instance;
-            pool = ObjectPool.instance;
-            new Player();
-        }
+            pool.Initialize();
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent() {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            debugFont = Content.Load<SpriteFont>("Debug");
-
-            sampleTexture = Content.Load<Texture2D>("Sprite/ArrowBullet");
+            pool.WakeUp(pool.player);
+            pool.WakeUp(pool.enemys);
         }
 
         /// <summary>
@@ -81,7 +85,6 @@ namespace sample_stg_mono_game {
             debug += "shot: " + input.GetAction(Input.Action.shot) + "\n";
             debug += "shot: " + input.normalizedVector + "\n";
 
-            pool.player.sprite = sampleTexture;
             pool.player.Update();
 
             base.Update(gameTime);
@@ -96,7 +99,9 @@ namespace sample_stg_mono_game {
             spriteBatch.Begin();
 
             spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);
-            pool.player.Draw(spriteBatch);
+
+            pool.Draw(pool.player, spriteBatch);
+            pool.Draw(pool.enemys, spriteBatch);
 
             spriteBatch.End();
 

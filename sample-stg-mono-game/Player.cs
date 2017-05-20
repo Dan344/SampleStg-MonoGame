@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 public class Player : CollisionObject {
@@ -17,10 +18,12 @@ public class Player : CollisionObject {
     /// 毎フレーム呼ぶ
     /// </summary>
     public void Update() {
+        if(!isActive) return;
+
         ControleMove();
     }
 
-    public void Hit<T>(T other) where T : GameObject {
+    public override void HitAction(CollisionObject other) {
 
     }
 
