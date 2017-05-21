@@ -100,11 +100,14 @@ public abstract class GameObject {
     /// <param name="vector">移動した後の座標</param>
     public virtual float Spin(float degree) => rotation += degree;
 
-    public virtual Vector2 MoveForward(float speed) {
+    /// <summary>rotationに基づいた現在の向きを単位ベクトルで返す</summary>
+    public Vector2 GetFront() {
         Matrix rotation = Matrix.CreateRotationZ(MathHelper.ToRadians(this.rotation));
-        Vector2 direction = Vector2.Transform(-Vector2.UnitY, rotation);
-
-        position += direction * speed;
-        return position;
+        return Vector2.Transform(-Vector2.UnitY, rotation);
     }
+
+    /// <summary>現在の正面に向かって移動する</summary>
+    /// <param name="speed">速度</param>
+    /// <returns>移動後の座標</returns>
+    public virtual Vector2 MoveFront(float speed) => position += GetFront() * speed;
 }
