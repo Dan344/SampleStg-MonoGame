@@ -6,11 +6,12 @@ public class Enemy : CollisionObject {
     }
 
     public override void Update() {
-        Spin(1);
+        //Spin(1);
+        Rotate(GetLookAt(pool.player.position));
 
-        //if(manager.elapsedFrame % 60 == 0) {
-        Shot();
-        //}
+        if(manager.elapsedFrame % 60 == 0) {
+            Shot();
+        }
     }
 
     protected void Shot() {

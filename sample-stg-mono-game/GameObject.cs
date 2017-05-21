@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 /// <summary>
 /// ゲーム中に登場するオブジェクトはこれを継承する。
@@ -110,4 +111,12 @@ public abstract class GameObject {
     /// <param name="speed">速度</param>
     /// <returns>移動後の座標</returns>
     public virtual Vector2 MoveFront(float speed) => position += GetFront() * speed;
+
+    /// <summary>現在位置から指定座標を向くrotation(degree)が返される。移動はしない</summary>
+    /// <param name="target">目標</param>
+    /// <returns>目標方向</returns>
+    public float GetLookAt(Vector2 target) {
+        Vector2 dv = target - position;
+        return 90 + MathHelper.ToDegrees((float)Math.Atan2(dv.Y, dv.X));
+    }
 }
