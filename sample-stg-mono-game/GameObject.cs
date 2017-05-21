@@ -98,7 +98,8 @@ public abstract class GameObject {
     public virtual Vector2 Move(Vector2 vector) => position += vector;
 
     /// <summary>回転させる(現在の向き+degree)</summary>
-    /// <param name="vector">移動した後の座標</param>
+    /// <param name="degree">回転速度</param>
+    /// <returns>回転後の向き</returns>
     public virtual float Spin(float degree) => rotation += degree;
 
     /// <summary>rotationに基づいた現在の向きを単位ベクトルで返す</summary>
