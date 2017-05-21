@@ -106,5 +106,4 @@ public class Input : Singleton<Input> {
         pause,
         shot,
     }
-
 }

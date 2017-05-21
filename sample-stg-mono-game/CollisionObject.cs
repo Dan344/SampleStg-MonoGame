@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
 
 /// <summary>
 /// 当たり判定を持つオブジェクト

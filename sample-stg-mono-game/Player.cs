@@ -1,11 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-
-public class Player : CollisionObject {
+﻿public class Player : CollisionObject {
     public float speed = 5;
 
     public Player() {

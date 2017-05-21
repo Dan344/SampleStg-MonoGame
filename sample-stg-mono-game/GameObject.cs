@@ -26,11 +26,8 @@ public class GameObject {
     /// <summary>親オブジェクトの参照</summary>
     public GameObject parent { get; set; }
 
-    bool _isActive;
     /// <summary>gameObjectが現在無効になっているか</summary>
-    public bool isActive { get { return _isActive; } }
-
-    SpriteFont debugFont;
+    public bool isActive { get; private set; }
 
     protected Input input;
     protected ObjectPool pool;
@@ -39,7 +36,7 @@ public class GameObject {
         input = Input.instance;
         pool = ObjectPool.instance;
 
-        _isActive = false;
+        isActive = false;
         sprite = null;
         spriteColor = Color.White;
         spriteFlip = SpriteEffects.None;
@@ -51,12 +48,12 @@ public class GameObject {
 
     /// <summary>poolに寝かす時の設定</summary>
     public virtual void Sleep() {
-        _isActive = false;
+        isActive = false;
     }
 
     /// <summary>poolから起こす時の初期化</summary>
     public virtual void WakeUp() {
-        _isActive = true;
+        isActive = true;
         spriteColor = Color.White;
         position = Vector2.Zero;
         rotation = 0;
@@ -81,41 +78,21 @@ public class GameObject {
                          , spriteFlip
                          , spriteDepth
                         );
-
-        //spriteBatch.DrawString(debugFont, position, position, Color.White);
     }
 
-    /// <summary>
-    /// 渡した座標に移動する
-    /// </summary>
+    /// <summary>渡した座標に移動する</summary>
     /// <param name="position">移動したい場所</param>
-    /// <returns>移動した結果</returns>
-    public virtual Vector2 Translate(Vector2 position) {
-        return this.position = position;
-    }
+    public virtual Vector2 Translate(Vector2 position) => this.position = position;
 
-    /// <summary>
-    /// 指定した方向を向く
-    /// </summary>
-    /// <param name="degree"></param>
-    /// <returns></returns>
-    public virtual float Rotate(float degree) {
-        return rotation = degree;
-    }
+    /// <summary>指定した方向を向く</summary>
+    /// <param name="degree">度数</param>
+    public virtual float Rotate(float degree) => rotation = degree;
 
-    /// <summary>
-    /// 渡したベクトルに向けて移動する
-    /// </summary>
+    /// <summary>渡したベクトルに向けて移動する</summary>
     /// <param name="vector">移動させたいvector</param>
-    public virtual void Move(Vector2 vector) {
-        position += vector;
-    }
+    public virtual Vector2 Move(Vector2 vector) => position += vector;
 
-    /// <summary>
-    /// 回転させる(現在の向き+degree)
-    /// </summary>
+    /// <summary>回転させる(現在の向き+degree)</summary>
     /// <param name="vector">移動した後の座標</param>
-    public virtual void Spin(float degree) {
-        rotation += degree;
-    }
+    public virtual float Spin(float degree) => rotation += degree;
 }
