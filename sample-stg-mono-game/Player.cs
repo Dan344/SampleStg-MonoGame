@@ -1,4 +1,6 @@
-﻿public class Player : CollisionObject {
+﻿using Microsoft.Xna.Framework;
+
+public class Player : CollisionObject {
     public float speed = 5;
 
     public Player() {
@@ -29,5 +31,20 @@
     /// </summary>
     public void ControleMove() {
         base.Move(input.normalizedVector * speed);
+        Vector2 limit = position;
+
+        if(position.Y < CONST.AREA.MOVEBLE_TOP) {
+            limit.Y = CONST.AREA.MOVEBLE_TOP;
+        } else if(position.Y > CONST.AREA.MOVEBLE_BOTTOM) {
+            limit.Y = CONST.AREA.MOVEBLE_BOTTOM;
+        }
+
+        if(position.X < CONST.AREA.MOVEBLE_LEFT) {
+            limit.X = CONST.AREA.MOVEBLE_LEFT;
+        } else if(position.X > CONST.AREA.MOVEBLE_RIGHT) {
+            limit.X = CONST.AREA.MOVEBLE_RIGHT;
+        }
+
+        Translate(limit);
     }
 }
