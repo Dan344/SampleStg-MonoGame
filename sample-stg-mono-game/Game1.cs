@@ -22,6 +22,7 @@ namespace sample_stg_mono_game {
             input = Input.instance;
             pool = ObjectPool.instance;
 
+
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
         }
 

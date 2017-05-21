@@ -8,5 +8,9 @@ public class PlayerBullet : CollisionObject {
     /// <summary>毎フレーム呼ぶ</summary>
     public override void Update() {
         Move(-Vector2.UnitY * speed);
+
+        if(position.Y <= CONST.AREA.P_BULLET_DELETE_LINE) {
+            Sleep();
+        }
     }
 }
