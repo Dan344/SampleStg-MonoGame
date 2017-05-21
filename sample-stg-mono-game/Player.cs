@@ -8,9 +8,7 @@ using System.Diagnostics;
 public class Player : CollisionObject {
     public float speed = 5;
 
-    protected Input input;
     public Player() {
-        input = Input.instance;
         //Debug.WriteLine(input);
     }
 
@@ -21,10 +19,17 @@ public class Player : CollisionObject {
         if(!isActive) return;
 
         ControleMove();
+        Shot();
+    }
+
+    public void Shot() {
+        if(input.GetAction(Input.Action.shot)) {
+            PlayerBullet bullet = pool.WakeUp(pool.playerBullets);
+            bullet?.Translate(position);
+        }
     }
 
     public override void HitAction(CollisionObject other) {
-        Debug.WriteLine("hogeeeeeeeeeee");
         base.HitAction(other);
     }
 

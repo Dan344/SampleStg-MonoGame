@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 public class ObjectPool : Singleton<ObjectPool> {
     public Player player;
-    public List<CollisionObject> playerBullets;
+    public List<PlayerBullet> playerBullets;
     public List<Enemy> enemys;
     public List<CollisionObject> enemyBullets;
     public List<CollisionObject> explosions;
@@ -16,7 +16,7 @@ public class ObjectPool : Singleton<ObjectPool> {
     public Texture2D sampleTexture;
 
     public ObjectPool() {
-        playerBullets = new List<CollisionObject>();
+        playerBullets = new List<PlayerBullet>();
         enemys = new List<Enemy>();
         enemyBullets = new List<CollisionObject>();
         explosions = new List<CollisionObject>();
@@ -28,15 +28,17 @@ public class ObjectPool : Singleton<ObjectPool> {
     /// </summary>
     public void Initialize() {
         player = new Player {
-            position = new Vector2(200, 200),
             sprite = sampleTexture,
             spriteColor = Color.Green
         };
 
+        for(int i = 0; i < 4; ++i) {
+            playerBullets.Add(new PlayerBullet { sprite = sampleTexture });
+        }
+
         for(int i = 0; i < 10; ++i) {
             enemys.Add(
             new Enemy {
-                position = new Vector2(100 * (i + 1), 300),
                 sprite = sampleTexture,
                 spriteColor = Color.Red
             }

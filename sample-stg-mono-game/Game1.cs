@@ -53,9 +53,9 @@ namespace sample_stg_mono_game {
             pool.Initialize();
 
             Player p = pool.WakeUp(pool.player);
-            p.position = new Vector2(200, 200);
+            p?.Translate(new Vector2(200, 200));
             Enemy e = pool.WakeUp(pool.enemys);
-            e.position = new Vector2(100, 100);
+            e?.Translate(new Vector2(100, 100));
         }
 
         /// <summary>
@@ -87,8 +87,14 @@ namespace sample_stg_mono_game {
             debug += "shot: " + input.GetAction(Input.Action.shot) + "\n";
             debug += "shot: " + input.normalizedVector + "\n";
 
+
+            pool.HitObjects(pool.playerBullets, pool.enemys);
             pool.HitObjects(pool.player, pool.enemys);
             pool.player.Update();
+
+            foreach(PlayerBullet pb in pool.playerBullets) {
+                pb.Update();
+            }
 
             base.Update(gameTime);
         }
@@ -103,6 +109,7 @@ namespace sample_stg_mono_game {
 
             spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);
 
+            pool.Draw(pool.playerBullets, spriteBatch);
             pool.Draw(pool.player, spriteBatch);
             pool.Draw(pool.enemys, spriteBatch);
 

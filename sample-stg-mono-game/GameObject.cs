@@ -15,10 +15,12 @@ public class GameObject {
     public SpriteEffects spriteFlip { get; set; }
     /// <summary>スプライトの重なり順</summary>
     public float spriteDepth { get; set; }
+
     /// <summary>gameObjectの現在座標</summary>
-    public Vector2 position { get; set; }
+    public Vector2 position { get; protected set; }
     /// <summary>gameObjectの現在の向き(degree)</summary>
-    public float rotation { get; set; }
+    public float rotation { get; protected set; }
+
     /// <summary>gameObjectの現在の大きさ</summary>
     public float scale { get; set; }
     /// <summary>親オブジェクトの参照</summary>
@@ -30,7 +32,13 @@ public class GameObject {
 
     SpriteFont debugFont;
 
+    protected Input input;
+    protected ObjectPool pool;
+
     public GameObject() {
+        input = Input.instance;
+        pool = ObjectPool.instance;
+
         _isActive = false;
         sprite = null;
         spriteColor = Color.White;
@@ -78,6 +86,24 @@ public class GameObject {
     }
 
     /// <summary>
+    /// 渡した座標に移動する
+    /// </summary>
+    /// <param name="position">移動したい場所</param>
+    /// <returns>移動した結果</returns>
+    public virtual Vector2 Translate(Vector2 position) {
+        return this.position = position;
+    }
+
+    /// <summary>
+    /// 指定した方向を向く
+    /// </summary>
+    /// <param name="degree"></param>
+    /// <returns></returns>
+    public virtual float Rotate(float degree) {
+        return rotation = degree;
+    }
+
+    /// <summary>
     /// 渡したベクトルに向けて移動する
     /// </summary>
     /// <param name="vector">移動させたいvector</param>
@@ -86,10 +112,10 @@ public class GameObject {
     }
 
     /// <summary>
-    /// 回転させる
+    /// 回転させる(現在の向き+degree)
     /// </summary>
     /// <param name="vector">移動した後の座標</param>
-    public virtual void Rotate(float degree) {
+    public virtual void Spin(float degree) {
         rotation += degree;
     }
 }
