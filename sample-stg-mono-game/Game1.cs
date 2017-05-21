@@ -36,6 +36,7 @@ namespace sample_stg_mono_game {
 
         /// <summary>初期化</summary>
         protected override void Initialize() {
+            Window.Title = CONST.TITLE;
             base.Initialize();
 
             pool.Initialize();
