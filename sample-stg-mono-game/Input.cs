@@ -35,11 +35,11 @@ public class Input : Singleton<Input> {
         get {
             float result = 0;
 
-            if(state.IsKeyDown(leftKey)) {
+            if(state.IsKeyDown(leftKey) || state.IsKeyDown(Keys.Left)) {
                 result -= 1;
             }
 
-            if(state.IsKeyDown(rightKey)) {
+            if(state.IsKeyDown(rightKey) || state.IsKeyDown(Keys.Right)) {
                 result += 1;
             }
 
@@ -52,11 +52,11 @@ public class Input : Singleton<Input> {
         get {
             float result = 0;
 
-            if(state.IsKeyDown(upKey)) {
+            if(state.IsKeyDown(upKey) || state.IsKeyDown(Keys.Up)) {
                 result -= 1;
             }
 
-            if(state.IsKeyDown(downKey)) {
+            if(state.IsKeyDown(downKey) || state.IsKeyDown(Keys.Down)) {
                 result += 1;
             }
 
