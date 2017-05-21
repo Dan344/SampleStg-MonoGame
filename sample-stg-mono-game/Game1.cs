@@ -54,7 +54,7 @@ namespace sample_stg_mono_game {
 
             Player p = pool.WakeUp(pool.player);
             p.position = new Vector2(200, 200);
-            Enemy e = pool.WakeUp(pool.enemys) as Enemy;
+            Enemy e = pool.WakeUp(pool.enemys);
             e.position = new Vector2(100, 100);
         }
 
