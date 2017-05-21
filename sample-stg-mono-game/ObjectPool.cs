@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
 public class ObjectPool : Singleton<ObjectPool> {
-    public Player player;
-    public List<PlayerBullet> playerBullets;
-    public List<Enemy> enemys;
-    public List<EnemyBullet> enemyBullets;
-    public List<CollisionObject> explosions;
-    public List<CollisionObject> items;
+    public Player player { get; private set; }
+    public List<PlayerBullet> playerBullets { get; private set; }
+    public List<Enemy> enemys { get; private set; }
+    public List<EnemyBullet> enemyBullets { get; private set; }
+    public List<CollisionObject> explosions { get; private set; }
+    public List<CollisionObject> items { get; private set; }
 
     public Texture2D sampleTexture;
 
