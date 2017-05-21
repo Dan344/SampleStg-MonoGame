@@ -19,7 +19,7 @@ public abstract class GameObject {
 
     /// <summary>gameObjectの現在座標</summary>
     public Vector2 position { get; protected set; }
-    /// <summary>gameObjectの現在の向き(degree)</summary>
+    /// <summary>gameObjectの現在の向き(degree, 0:右 90:上)</summary>
     public float rotation { get; protected set; }
 
     /// <summary>gameObjectの現在の大きさ</summary>
