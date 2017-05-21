@@ -31,19 +31,10 @@ public class Player : CollisionObject {
     /// </summary>
     public void ControleMove() {
         base.Move(input.normalizedVector * speed);
+
         Vector2 limit = position;
-
-        if(position.Y < CONST.AREA.MOVEBLE_TOP) {
-            limit.Y = CONST.AREA.MOVEBLE_TOP;
-        } else if(position.Y > CONST.AREA.MOVEBLE_BOTTOM) {
-            limit.Y = CONST.AREA.MOVEBLE_BOTTOM;
-        }
-
-        if(position.X < CONST.AREA.MOVEBLE_LEFT) {
-            limit.X = CONST.AREA.MOVEBLE_LEFT;
-        } else if(position.X > CONST.AREA.MOVEBLE_RIGHT) {
-            limit.X = CONST.AREA.MOVEBLE_RIGHT;
-        }
+        limit.Y = MathHelper.Clamp(position.Y, CONST.AREA.MOVEBLE_TOP, CONST.AREA.MOVEBLE_BOTTOM);
+        limit.X = MathHelper.Clamp(position.X, CONST.AREA.MOVEBLE_LEFT, CONST.AREA.MOVEBLE_RIGHT);
 
         Translate(limit);
     }
