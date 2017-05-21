@@ -16,8 +16,8 @@ namespace sample_stg_mono_game {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            graphics.PreferredBackBufferWidth = 1024;
-            graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferWidth = CONST.AREA.W;
+            graphics.PreferredBackBufferHeight = CONST.AREA.H;
 
             input = Input.instance;
             pool = ObjectPool.instance;
