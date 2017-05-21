@@ -16,7 +16,7 @@ public class Player : CollisionObject {
     }
 
     public void Shot() {
-        if(input.GetAction(Input.Action.shot)) {
+        if(input.GetActionDown(Input.Action.shot)) {
             PlayerBullet bullet = pool.WakeUp(pool.playerBullets);
             bullet?.Translate(position);
         }

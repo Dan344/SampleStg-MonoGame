@@ -13,6 +13,7 @@ public class Input : Singleton<Input> {
     Keys submitKey = Keys.Enter;
     Keys ExitKey   = Keys.Escape;
 
+    KeyboardState prevState;
     KeyboardState state;
 
 
@@ -21,11 +22,8 @@ public class Input : Singleton<Input> {
     }
 
     public void Update() {
-        KeyboardState newState = Keyboard.GetState();
-
-        //次のフレームでキーが離されたか等の処理を挟む予定
-
-        state = newState;
+        prevState = state;
+        state = Keyboard.GetState();
     }
 
     public bool exit {
@@ -83,22 +81,68 @@ public class Input : Singleton<Input> {
     public bool GetAction(Action act) {
         switch(act) {
             case Action.shot:
-                return state.IsKeyDown(shotKey);
+                return IsKeyHold(shotKey);
 
             case Action.cancel:
-                return state.IsKeyDown(cancelKey);
+                return IsKeyHold(cancelKey);
 
             case Action.pause:
-                return state.IsKeyDown(pauseKey);
+                return IsKeyHold(pauseKey);
 
             case Action.submit:
-                return state.IsKeyDown(shotKey) ? true :
-                       state.IsKeyDown(submitKey);
+                return IsKeyHold(shotKey) ? true :
+                       IsKeyHold(submitKey);
 
             default:
                 return false;
         }
     }
+
+    /// <summary>当該のアクションに必要なボタンが押されたフレームのみtrue</summary>
+    public bool GetActionDown(Action act) {
+        switch(act) {
+            case Action.shot:
+                return IsKeyDown(shotKey);
+
+            case Action.cancel:
+                return IsKeyDown(cancelKey);
+
+            case Action.pause:
+                return IsKeyDown(pauseKey);
+
+            case Action.submit:
+                return IsKeyDown(shotKey) ? true :
+                       IsKeyDown(submitKey);
+
+            default:
+                return false;
+        }
+    }
+
+    /// <summary>当該のアクションに必要なボタンが離されたフレームのみtrue</summary>
+    public bool GetActionUp(Action act) {
+        switch(act) {
+            case Action.shot:
+                return IsKeyUp(shotKey);
+
+            case Action.cancel:
+                return IsKeyUp(cancelKey);
+
+            case Action.pause:
+                return IsKeyDown(pauseKey);
+
+            case Action.submit:
+                return IsKeyUp(shotKey) ? true :
+                       IsKeyUp(submitKey);
+
+            default:
+                return false;
+        }
+    }
+
+    bool IsKeyHold(Keys key) => state.IsKeyDown(key);
+    bool IsKeyDown(Keys key) => state.IsKeyDown(key) && !prevState.IsKeyDown(key);
+    bool IsKeyUp(Keys key) => state.IsKeyUp(key) && prevState.IsKeyDown(key);
 
     public enum Action {
         submit,
