@@ -9,6 +9,7 @@ namespace sample_stg_mono_game {
         SpriteBatch spriteBatch;
         Input input;
         ObjectPool pool;
+        GameManager manager;
         SpriteFont debugFont;
         Texture2D sampleTexture;
 
@@ -21,7 +22,7 @@ namespace sample_stg_mono_game {
 
             input = Input.instance;
             pool = ObjectPool.instance;
-
+            manager = GameManager.instance;
 
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
         }
@@ -53,7 +54,6 @@ namespace sample_stg_mono_game {
         }
 
         string debug;
-        Vector2 test = Vector2.Zero;
 
         /// <summary>ゲームループのメインロジック</summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
@@ -66,13 +66,17 @@ namespace sample_stg_mono_game {
 
             SetDebugString();
 
+            manager.Update();
+
             //todo: 当たり判定チェックとUpdateで二重に呼ぶのは無駄な気がする
             pool.HitObjects(pool.playerBullets, pool.enemys);
             pool.HitObjects(pool.player, pool.enemys);
+            pool.HitObjects(pool.player, pool.enemyBullets);
 
             pool.Update(pool.player);
             pool.Update(pool.enemys);
             pool.Update(pool.playerBullets);
+            pool.Update(pool.enemyBullets);
 
             base.Update(gameTime);
         }
@@ -95,6 +99,7 @@ namespace sample_stg_mono_game {
 
             pool.Draw(pool.playerBullets, spriteBatch);
             pool.Draw(pool.player, spriteBatch);
+            pool.Draw(pool.enemyBullets, spriteBatch);
             pool.Draw(pool.enemys, spriteBatch);
 
             spriteBatch.End();

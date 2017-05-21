@@ -7,7 +7,7 @@ public class ObjectPool : Singleton<ObjectPool> {
     public Player player;
     public List<PlayerBullet> playerBullets;
     public List<Enemy> enemys;
-    public List<CollisionObject> enemyBullets;
+    public List<EnemyBullet> enemyBullets;
     public List<CollisionObject> explosions;
     public List<CollisionObject> items;
 
@@ -16,7 +16,7 @@ public class ObjectPool : Singleton<ObjectPool> {
     public ObjectPool() {
         playerBullets = new List<PlayerBullet>();
         enemys = new List<Enemy>();
-        enemyBullets = new List<CollisionObject>();
+        enemyBullets = new List<EnemyBullet>();
         explosions = new List<CollisionObject>();
         items = new List<CollisionObject>();
     }
@@ -39,6 +39,10 @@ public class ObjectPool : Singleton<ObjectPool> {
                 spriteColor = Color.Red
             }
             );
+        }
+
+        for(int i = 0; i < 2000; ++i) {
+            enemyBullets.Add(new EnemyBullet { sprite = sampleTexture });
         }
     }
 

@@ -31,10 +31,12 @@ public abstract class GameObject {
 
     protected Input input;
     protected ObjectPool pool;
+    protected GameManager manager;
 
     public GameObject() {
         input = Input.instance;
         pool = ObjectPool.instance;
+        manager = GameManager.instance;
 
         isActive = false;
         sprite = null;
@@ -72,7 +74,7 @@ public abstract class GameObject {
                          , position
                          , null
                          , spriteColor
-                         , rotation
+                         , MathHelper.ToRadians(rotation)
                          , new Vector2(sprite.Width / 2, sprite.Height / 2) //pivot
                          , scale
                          , spriteFlip
@@ -97,4 +99,12 @@ public abstract class GameObject {
     /// <summary>回転させる(現在の向き+degree)</summary>
     /// <param name="vector">移動した後の座標</param>
     public virtual float Spin(float degree) => rotation += degree;
+
+    public virtual Vector2 MoveForward(float speed) {
+        Matrix rotation = Matrix.CreateRotationZ(MathHelper.ToRadians(this.rotation));
+        Vector2 direction = Vector2.Transform(-Vector2.UnitY, rotation);
+
+        position += direction * speed;
+        return position;
+    }
 }

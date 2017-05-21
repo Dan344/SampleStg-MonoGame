@@ -43,8 +43,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Enemy.cs" />
+    <Compile Include="EnemyBullet.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="CollisionObject.cs" />
+    <Compile Include="GameManager.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="ObjectPool.cs" />
