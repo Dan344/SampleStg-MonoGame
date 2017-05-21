@@ -3,7 +3,7 @@
 /// <summary>
 /// 当たり判定を持つオブジェクト
 /// </summary>
-public class CollisionObject : GameObject {
+public abstract class CollisionObject : GameObject {
     Rectangle collisionArea;
 
     public CollisionObject() : base() {

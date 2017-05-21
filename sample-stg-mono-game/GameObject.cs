@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 /// <summary>
 /// ゲーム中に登場するオブジェクトはこれを継承する。
 /// </summary>
-public class GameObject {
+public abstract class GameObject {
     /// <summary>Uniqueなid(未実装)</summary>
     public int id { get; set; }
     /// <summary>gameObjectの表示するスプライト(一部を切り出して使う予定)</summary>
@@ -79,6 +79,8 @@ public class GameObject {
                          , spriteDepth
                         );
     }
+
+    public abstract void Update();
 
     /// <summary>渡した座標に移動する</summary>
     /// <param name="position">移動したい場所</param>

@@ -62,22 +62,25 @@ namespace sample_stg_mono_game {
             //escキーが押されたら終了する
             if(input.exit) Exit();
 
+            SetDebugString();
+
+            //todo: 当たり判定チェックとUpdateで二重に呼ぶのは無駄な気がする
+            pool.HitObjects(pool.playerBullets, pool.enemys);
+            pool.HitObjects(pool.player, pool.enemys);
+
+            pool.Update(pool.player);
+            pool.Update(pool.enemys);
+            pool.Update(pool.playerBullets);
+
+            base.Update(gameTime);
+        }
+
+        void SetDebugString() {
             debug = "";
             debug += "x: " + input.x + "\n";
             debug += "y: " + input.y + "\n";
             debug += "shot: " + input.GetAction(Input.Action.shot) + "\n";
             debug += "shot: " + input.normalizedVector + "\n";
-
-
-            pool.HitObjects(pool.playerBullets, pool.enemys);
-            pool.HitObjects(pool.player, pool.enemys);
-            pool.player.Update();
-
-            foreach(PlayerBullet pb in pool.playerBullets) {
-                pb.Update();
-            }
-
-            base.Update(gameTime);
         }
 
         /// <summary>ゲームループの描画</summary>

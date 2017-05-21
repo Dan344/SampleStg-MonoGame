@@ -8,9 +8,7 @@
     /// <summary>
     /// 毎フレーム呼ぶ
     /// </summary>
-    public void Update() {
-        if(!isActive) return;
-
+    public override void Update() {
         ControleMove();
         Shot();
     }

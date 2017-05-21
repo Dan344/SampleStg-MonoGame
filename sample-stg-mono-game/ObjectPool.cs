@@ -48,6 +48,16 @@ public class ObjectPool : Singleton<ObjectPool> {
         sampleTexture = Content.Load<Texture2D>("Sprite/ArrowBullet");
     }
 
+    /// <summary>渡したオブジェクトのUpdate()を呼ぶ</summary>
+    public void Update<T>(T obj) where T : GameObject {
+        if(obj.isActive) obj.Update();
+    }
+
+    /// <summary>渡したリストのUpdate()を呼ぶ</summary>
+    public void Update<T>(List<T> list) where T : GameObject {
+        foreach(T obj in list) Update(obj);
+    }
+
     /// <summary>２つのCollisionObjectのリストを渡すとそれぞれのリスト当たり判定処理が行われる</summary>
     /// <param name="list1">CollisionObjectのリスト</param>
     /// <param name="list2">CollisionObjectのリスト</param>

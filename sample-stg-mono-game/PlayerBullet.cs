@@ -6,9 +6,7 @@ public class PlayerBullet : CollisionObject {
     float speed = 10;
 
     /// <summary>毎フレーム呼ぶ</summary>
-    public void Update() {
-        if(!isActive) return;
-
+    public override void Update() {
         Move(-Vector2.UnitY * speed);
     }
 }
