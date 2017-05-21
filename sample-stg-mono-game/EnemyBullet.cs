@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 public class EnemyBullet : CollisionObject {
-    float speed = 10;
+    float speed = 1;
 
     /// <summary>毎フレーム呼ぶ</summary>
     public override void Update() {

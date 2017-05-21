@@ -8,9 +8,9 @@ public class Enemy : CollisionObject {
     public override void Update() {
         Spin(1);
 
-        if(manager.elapsedFrame % 60 == 0) {
-            Shot();
-        }
+        //if(manager.elapsedFrame % 60 == 0) {
+        Shot();
+        //}
     }
 
     protected void Shot() {
