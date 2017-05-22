@@ -23,7 +23,6 @@ public class Enemy : CollisionObject {
     }
 
     public override void Sleep() {
-        --manager.target;
         base.Sleep();
     }
 
@@ -34,6 +33,7 @@ public class Enemy : CollisionObject {
     }
 
     public override void HitAction(CollisionObject other) {
+        --manager.target;
         manager.score += score;
         base.HitAction(other);
     }
