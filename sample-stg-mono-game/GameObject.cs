@@ -16,6 +16,8 @@ public abstract class GameObject {
     public SpriteEffects spriteFlip { get; set; }
     /// <summary>スプライトの重なり順</summary>
     public float spriteDepth { get; set; }
+    /// <summary>スプライトの正面</summary>
+    public SpriteFront spriteFront { get; set; }
 
     /// <summary>gameObjectの現在座標</summary>
     public Vector2 position { get; protected set; }
@@ -33,6 +35,14 @@ public abstract class GameObject {
     protected Input input;
     protected ObjectPool pool;
     protected GameManager manager;
+
+    /// <summary>スプライトの正面を指定する</summary>
+    public enum SpriteFront {
+        right  = 0,
+        top    = 90,
+        left   = 180,
+        bottom = 270
+    }
 
     public GameObject() {
         input = Input.instance;
@@ -75,7 +85,7 @@ public abstract class GameObject {
                          , position
                          , null
                          , spriteColor
-                         , MathHelper.ToRadians(rotation)
+                         , MathHelper.ToRadians(rotation + (float)spriteFront)
                          , new Vector2(sprite.Width / 2, sprite.Height / 2) //pivot
                          , scale
                          , spriteFlip
@@ -104,8 +114,8 @@ public abstract class GameObject {
 
     /// <summary>rotationに基づいた現在の向きを単位ベクトルで返す</summary>
     public Vector2 GetFront() {
-        Matrix rotation = Matrix.CreateRotationZ(MathHelper.ToRadians(this.rotation));
-        return Vector2.Transform(-Vector2.UnitY, rotation);
+        Matrix matrix = Matrix.CreateRotationZ(MathHelper.ToRadians(rotation));
+        return Vector2.Transform(Vector2.UnitX, matrix);
     }
 
     /// <summary>現在の正面に向かって移動する</summary>
@@ -118,6 +128,6 @@ public abstract class GameObject {
     /// <returns>目標方向</returns>
     public float GetLookAt(Vector2 target) {
         Vector2 dv = target - position;
-        return 90 + MathHelper.ToDegrees((float)Math.Atan2(dv.Y, dv.X));
+        return MathHelper.ToDegrees((float)Math.Atan2(dv.Y, dv.X));
     }
 }

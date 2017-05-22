@@ -33,16 +33,18 @@ public class ObjectPool : Singleton<ObjectPool> {
         }
 
         for(int i = 0; i < 10; ++i) {
-            enemys.Add(
-            new Enemy {
+            enemys.Add(new Enemy {
                 sprite = sampleTexture,
-                spriteColor = Color.Red
-            }
-            );
+                spriteColor = Color.Red,
+                spriteFront = GameObject.SpriteFront.top
+            });
         }
 
         for(int i = 0; i < 2000; ++i) {
-            enemyBullets.Add(new EnemyBullet { sprite = sampleTexture });
+            enemyBullets.Add(new EnemyBullet {
+                sprite = sampleTexture,
+                spriteFront = GameObject.SpriteFront.top
+            });
         }
     }
 
