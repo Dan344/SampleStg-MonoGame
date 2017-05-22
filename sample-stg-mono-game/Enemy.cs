@@ -17,6 +17,16 @@ public class Enemy : CollisionObject {
         }
     }
 
+    public override void WakeUp() {
+        ++manager.target;
+        base.WakeUp();
+    }
+
+    public override void Sleep() {
+        --manager.target;
+        base.Sleep();
+    }
+
     protected void Shot() {
         EnemyBullet eb = pool.WakeUp(pool.enemyBullets);
         eb?.Translate(position);

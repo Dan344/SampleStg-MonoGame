@@ -42,13 +42,6 @@ namespace sample_stg_mono_game {
 
             pool.Initialize();
 
-            Player p = pool.WakeUp(pool.player);
-            p?.Translate(new Vector2(200, 200));
-
-            for(int i = 0; i < 8; ++i) {
-                Enemy e = pool.WakeUp(pool.enemys);
-                e?.Translate(new Vector2(100 * i, 100));
-            }
         }
 
         /// <summary>解放</summary>
@@ -87,6 +80,8 @@ namespace sample_stg_mono_game {
         void SetDebugString() {
             debug = "";
             debug += "score: " + manager.score + "\n";
+            debug += "target: " + manager.target + " state: " + manager.state + "\n";
+            debug += "left: " + manager.playerLeft + "\n";
             debug += "x: " + input.x + "\n";
             debug += "y: " + input.y + "\n";
             debug += "shot: " + input.GetAction(Input.Action.shot) + "\n";

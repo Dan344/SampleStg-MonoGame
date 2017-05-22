@@ -120,6 +120,21 @@ public class ObjectPool : Singleton<ObjectPool> {
         return result;
     }
 
+
+    /// <summary>該当オブジェクトを全てスリープする</summary>
+    /// <typeparam name="T">GameObjectの派生クラス</typeparam>
+    /// <param name="obj">寝かせたいオブジェクト</param>
+    public void Sleep<T>(T obj) where T : GameObject {
+        obj.Sleep();
+    }
+
+    /// <summary>該当オブジェクトを全てスリープする</summary>
+    /// <typeparam name="T">GameObjectの派生クラス</typeparam>
+    /// <param name="obj">寝かせたいオブジェクトのリスト</param>
+    public void Sleep<T>(List<T> list) where T : GameObject {
+        foreach(T obj in list) { obj.Sleep(); }
+    }
+
     /// <summary>該当オブジェクトを描画する時に呼ぶ</summary>
     /// <param name="gameObject">GameObjectの派生クラス</param>
     /// <param name="spriteBatch">SpriteBatchの参照</param>
