@@ -86,6 +86,7 @@ namespace sample_stg_mono_game {
 
         void SetDebugString() {
             debug = "";
+            debug += "score: " + manager.score + "\n";
             debug += "x: " + input.x + "\n";
             debug += "y: " + input.y + "\n";
             debug += "shot: " + input.GetAction(Input.Action.shot) + "\n";

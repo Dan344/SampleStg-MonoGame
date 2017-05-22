@@ -1,6 +1,8 @@
 ﻿using System;
 
 public class Enemy : CollisionObject {
+    protected int score = 100;
+
     public Enemy() {
 
     }
@@ -22,6 +24,7 @@ public class Enemy : CollisionObject {
     }
 
     public override void HitAction(CollisionObject other) {
+        manager.score += score;
         base.HitAction(other);
     }
 }
