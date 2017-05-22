@@ -12,9 +12,12 @@ namespace sample_stg_mono_game {
         GameManager manager;
         SpriteFont debugFont;
         Texture2D sampleTexture;
+        SequenceManager sequence;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
+            sequence = new SequenceManager();
+
             Content.RootDirectory = "Content";
 
             graphics.PreferredBackBufferWidth = CONST.AREA.W;
@@ -60,26 +63,70 @@ namespace sample_stg_mono_game {
             //escキーが押されたら終了する
             if(input.exit) Exit();
 
+            switch(sequence.state) {
+                case SequenceManager.State.splash:
+                    if(input.GetActionDown(Input.Action.submit)) {
+                        sequence.state = SequenceManager.State.title;
+                    }
+
+                    break;
+
+                case SequenceManager.State.title:
+                    if(input.GetActionDown(Input.Action.submit)) {
+                        sequence.state = SequenceManager.State.game;
+                        manager.Initialize();
+                    }
+
+                    break;
+
+                case SequenceManager.State.game:
+                    manager.Update();
+
+                    //todo: 当たり判定チェックとUpdateで二重に呼ぶのは無駄な気がする
+                    pool.HitObjects(pool.playerBullets, pool.enemys);
+                    pool.HitObjects(pool.player, pool.enemys);
+                    pool.HitObjects(pool.player, pool.enemyBullets);
+
+                    pool.Update(pool.player);
+                    pool.Update(pool.enemys);
+                    pool.Update(pool.playerBullets);
+                    pool.Update(pool.enemyBullets);
+
+                    if(manager.state == GameManager.GameState.gameover) {
+                        sequence.state = SequenceManager.State.title;
+                    }
+
+                    break;
+            }
+
             SetDebugString();
-
-            manager.Update();
-
-            //todo: 当たり判定チェックとUpdateで二重に呼ぶのは無駄な気がする
-            pool.HitObjects(pool.playerBullets, pool.enemys);
-            pool.HitObjects(pool.player, pool.enemys);
-            pool.HitObjects(pool.player, pool.enemyBullets);
-
-            pool.Update(pool.player);
-            pool.Update(pool.enemys);
-            pool.Update(pool.playerBullets);
-            pool.Update(pool.enemyBullets);
 
             base.Update(gameTime);
         }
 
+        /// <summary>ゲームループの描画</summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Draw(GameTime gameTime) {
+            switch(sequence.state) {
+                case SequenceManager.State.splash:
+                    SplashDraw();
+                    break;
+
+                case SequenceManager.State.title:
+                    TitleDraw();
+                    break;
+
+                case SequenceManager.State.game:
+                    GameDraw();
+                    break;
+            }
+
+            base.Draw(gameTime);
+        }
+
         void SetDebugString() {
             debug = "";
-            debug += "score: " + manager.score + "\n";
+            debug += "sequence: " + sequence.state + " score: " + manager.score + "\n";
             debug += "target: " + manager.target + " state: " + manager.state + "\n";
             debug += "left: " + manager.playerLeft + "\n";
             debug += "x: " + input.x + "\n";
@@ -88,22 +135,29 @@ namespace sample_stg_mono_game {
             debug += "shot: " + input.normalizedVector + "\n";
         }
 
-        /// <summary>ゲームループの描画</summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime) {
+        void SplashDraw() {
+            GraphicsDevice.Clear(Color.Red);
+            spriteBatch.Begin();
+            spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);
+            spriteBatch.End();
+        }
+
+        void TitleDraw() {
+            GraphicsDevice.Clear(Color.BlueViolet);
+            spriteBatch.Begin();
+            spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);
+            spriteBatch.End();
+        }
+
+        void GameDraw() {
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-
             spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);
-
             pool.Draw(pool.playerBullets, spriteBatch);
             pool.Draw(pool.player, spriteBatch);
             pool.Draw(pool.enemyBullets, spriteBatch);
             pool.Draw(pool.enemys, spriteBatch);
-
             spriteBatch.End();
-
-            base.Draw(gameTime);
         }
     }
 }
