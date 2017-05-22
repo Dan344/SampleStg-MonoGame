@@ -95,7 +95,7 @@ namespace sample_stg_mono_game {
         /// <summary>ゲームループの描画</summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
 
             spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);

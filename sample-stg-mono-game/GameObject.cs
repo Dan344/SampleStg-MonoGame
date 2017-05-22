@@ -6,8 +6,6 @@ using System;
 /// ゲーム中に登場するオブジェクトはこれを継承する。
 /// </summary>
 public abstract class GameObject {
-    /// <summary>Uniqueなid(未実装)</summary>
-    public int id { get; set; }
     /// <summary>gameObjectの表示するスプライト(一部を切り出して使う予定)</summary>
     public Texture2D sprite { get; set; }
     /// <summary>スプライトの色。Whiteが原色</summary>
@@ -26,8 +24,6 @@ public abstract class GameObject {
 
     /// <summary>gameObjectの現在の大きさ</summary>
     public float scale { get; set; }
-    /// <summary>親オブジェクトの参照</summary>
-    public GameObject parent { get; set; }
 
     /// <summary>gameObjectが現在無効になっているか</summary>
     public bool isActive { get; private set; }
@@ -67,11 +63,6 @@ public abstract class GameObject {
     /// <summary>poolから起こす時の初期化</summary>
     public virtual void WakeUp() {
         isActive = true;
-        spriteColor = Color.White;
-        position = Vector2.Zero;
-        rotation = 0;
-        scale = 1;
-        parent = null;
     }
 
     /// <summary>

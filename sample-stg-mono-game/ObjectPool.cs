@@ -29,7 +29,10 @@ public class ObjectPool : Singleton<ObjectPool> {
         };
 
         for(int i = 0; i < 4; ++i) {
-            playerBullets.Add(new PlayerBullet { sprite = sampleTexture });
+            playerBullets.Add(new PlayerBullet {
+                sprite = sampleTexture,
+                spriteColor = Color.Aqua
+            });
         }
 
         for(int i = 0; i < 10; ++i) {
@@ -43,6 +46,7 @@ public class ObjectPool : Singleton<ObjectPool> {
         for(int i = 0; i < 2000; ++i) {
             enemyBullets.Add(new EnemyBullet {
                 sprite = sampleTexture,
+                spriteColor = Color.Yellow,
                 spriteFront = GameObject.SpriteFront.top
             });
         }
