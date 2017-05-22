@@ -61,6 +61,13 @@ public class GameManager : Singleton<GameManager> {
     }
 
     public void Update() {
+        ++elapsedFrame;
+        StateUpdate();
+        GameObjectsHitCheck();
+        GameObjectsUpdate();
+    }
+
+    void StateUpdate() {
         if(state == GameState.standby) {
             Standby();
         }
@@ -78,7 +85,21 @@ public class GameManager : Singleton<GameManager> {
             --playerLeft;
             Standby();
         }
+    }
 
-        ++elapsedFrame;
+    /// <summary>当たり判定のチェックを行う</summary>
+    void GameObjectsHitCheck() {
+        //todo: 当たり判定チェックとUpdateで二重に呼ぶのは無駄な気がする
+        pool.HitObjects(pool.playerBullets, pool.enemys);
+        pool.HitObjects(pool.player, pool.enemys);
+        pool.HitObjects(pool.player, pool.enemyBullets);
+    }
+
+    /// <summary>各GameObjectのUpdateを行う</summary>
+    void GameObjectsUpdate() {
+        pool.Update(pool.player);
+        pool.Update(pool.enemys);
+        pool.Update(pool.playerBullets);
+        pool.Update(pool.enemyBullets);
     }
 }

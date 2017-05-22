@@ -82,16 +82,6 @@ namespace sample_stg_mono_game {
                 case SequenceManager.State.game:
                     manager.Update();
 
-                    //todo: 当たり判定チェックとUpdateで二重に呼ぶのは無駄な気がする
-                    pool.HitObjects(pool.playerBullets, pool.enemys);
-                    pool.HitObjects(pool.player, pool.enemys);
-                    pool.HitObjects(pool.player, pool.enemyBullets);
-
-                    pool.Update(pool.player);
-                    pool.Update(pool.enemys);
-                    pool.Update(pool.playerBullets);
-                    pool.Update(pool.enemyBullets);
-
                     if(manager.state == GameManager.GameState.gameover) {
                         sequence.state = SequenceManager.State.title;
                     }
