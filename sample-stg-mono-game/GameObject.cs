@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using static Microsoft.Xna.Framework.MathHelper;
+using static System.Math;
 
 /// <summary>
 /// ゲーム中に登場するオブジェクトはこれを継承する。
@@ -76,7 +77,7 @@ public abstract class GameObject {
                          , position
                          , null
                          , spriteColor
-                         , MathHelper.ToRadians(rotation + (float)spriteFront)
+                         , ToRadians(rotation + (float)spriteFront)
                          , new Vector2(sprite.Width / 2, sprite.Height / 2) //pivot
                          , scale
                          , spriteFlip
@@ -105,7 +106,7 @@ public abstract class GameObject {
 
     /// <summary>rotationに基づいた現在の向きを単位ベクトルで返す</summary>
     public Vector2 GetFront() {
-        Matrix matrix = Matrix.CreateRotationZ(MathHelper.ToRadians(rotation));
+        Matrix matrix = Matrix.CreateRotationZ(ToRadians(rotation));
         return Vector2.Transform(Vector2.UnitX, matrix);
     }
 
@@ -119,6 +120,6 @@ public abstract class GameObject {
     /// <returns>目標方向</returns>
     public float GetLookAt(Vector2 target) {
         Vector2 dv = target - position;
-        return MathHelper.ToDegrees((float)Math.Atan2(dv.Y, dv.X));
+        return ToDegrees((float)Atan2(dv.Y, dv.X));
     }
 }
