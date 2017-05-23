@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 public class GameManager : Singleton<GameManager> {
     /// <summary>ゲームロジックの経過時間。1から始まる</summary>
@@ -19,9 +23,11 @@ public class GameManager : Singleton<GameManager> {
     public int playerLeft { get; set; } = 6;
 
     private ObjectPool pool;
+    private Coroutine coroutine;
 
     public GameManager() {
         pool = ObjectPool.instance;
+        coroutine = Coroutine.instance;
     }
 
     public enum GameState {
@@ -63,8 +69,37 @@ public class GameManager : Singleton<GameManager> {
     public void Update() {
         ++elapsedFrame;
         StateUpdate();
+        coroutine.Start(Test());
         GameObjectsHitCheck();
         GameObjectsUpdate();
+    }
+
+    bool isTestRunning = false;
+    IEnumerator Test() {
+        if(isTestRunning) {
+            yield break;
+        } else {
+            isTestRunning = true;
+        }
+
+        Debug.WriteLine(3);
+        Enemy e = pool.WakeUp(pool.enemys);
+        Debug.WriteLine(4);
+        e?.Translate(new Vector2(1000, 100));
+
+        for(int i = 0; i < 100; ++i) {
+            yield return null;
+        }
+
+        e = pool.WakeUp(pool.enemys);
+        e?.Translate(new Vector2(1000, 100));
+
+        for(int i = 0; i < 100; ++i) {
+            yield return null;
+        }
+
+        e = pool.WakeUp(pool.enemys);
+        e?.Translate(new Vector2(1000, 100));
     }
 
     void StateUpdate() {
