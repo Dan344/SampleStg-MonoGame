@@ -13,7 +13,6 @@ namespace sample_stg_mono_game {
         SpriteFont debugFont;
         Texture2D sampleTexture;
         SequenceManager sequence;
-        Coroutine coroutine;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -27,7 +26,6 @@ namespace sample_stg_mono_game {
             input = Input.instance;
             pool = ObjectPool.instance;
             manager = GameManager.instance;
-            coroutine = Coroutine.instance;
 
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
         }
@@ -92,9 +90,6 @@ namespace sample_stg_mono_game {
             }
 
             SetDebugString();
-
-            //コルーチンの内容は全ての動作の最後に行われる
-            coroutine.Update();
 
             base.Update(gameTime);
         }

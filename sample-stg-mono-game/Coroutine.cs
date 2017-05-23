@@ -1,22 +1,34 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 
-public class Coroutine : Singleton<Coroutine> {
-    List<IEnumerator> threads = new List<IEnumerator>();
+/// <summary>
+/// Coroutineを呼びやすくするだけの静的クラス
+/// </summary>
+public static class Coroutine {
+    /// <summary>置く場所と処理を渡すと、繰り返しコルーチンを実行する。</summary>
+    /// <param name="local">instanceの参照</param>
+    /// <param name="method">実行したいコルーチン</param>
+    public static void Repeat(ref IEnumerator local, IEnumerator method) {
+        if(local == null) {
+            local = method;
+        }
 
-    /// <summary>開始したいコルーチンを渡すと開始する</summary>
-    /// <param name="coroutine"></param>
-    public void Start(IEnumerator coroutine) {
-        if(!threads.Contains(coroutine)) {
-            threads.Add(coroutine);
+        if(local != null) {
+            if(!local.MoveNext()) {
+                local = null;
+            }
         }
     }
 
-    public void Update() {
-        //完了したコルーチンを削除しつつ全走査
-        threads.RemoveAll(c => !c.MoveNext());
+    /// <summary>置く場所と処理を渡すと、一度コルーチンを実行する。</summary>
+    /// <param name="local">instanceの参照</param>
+    /// <param name="method">実行したいコルーチン</param>
+    public static void Start(ref IEnumerator local, IEnumerator method) {
+        if(local == null) {
+            local = method;
+        }
+
+        if(local != null) {
+            local.MoveNext();
+        }
     }
 }
