@@ -41,13 +41,54 @@ public class GameManager : Singleton<GameManager> {
         playerLeft = 6;
     }
 
-    public void Standby() {
+
+    public void Update() {
+        ++elapsedFrame;
+        StateUpdate();
+        GameObjectsHitCheck();
+        GameObjectsUpdate();
+    }
+
+    void StateUpdate() {
+        switch(state) {
+            case GameState.standby:
+                Coroutine.Repeat(ref standbyCoroutine, StandbyCoroutine());
+                break;
+
+            case GameState.play:
+                if(!pool.player.isActive) {
+                    state = GameState.death;
+                }
+
+                if(target == 0) {
+                    state = GameState.clear;
+                }
+
+                break;
+
+            case GameState.clear:
+                Coroutine.Repeat(ref clearCoroutine, ClearCoroutine());
+                break;
+
+            case GameState.death:
+                Coroutine.Repeat(ref deathCoroutine, DeathCoroutine());
+                break;
+
+            case GameState.gameover:
+                pool.Sleep(pool.player);
+                break;
+
+        }
+    }
+
+    IEnumerator standbyCoroutine;
+    IEnumerator StandbyCoroutine() {
         Player p = pool.WakeUp(pool.player);
         p?.Translate(new Vector2(CONST.AREA.RIGHT / 2, CONST.AREA.BOTTOM));
 
-        pool.Sleep(pool.playerBullets);
-        pool.Sleep(pool.enemys);
-        pool.Sleep(pool.enemyBullets);
+        for(int i = 0; i < 60; ++i) {
+            yield return null;
+        }
 
         target = 0;
 
@@ -59,54 +100,32 @@ public class GameManager : Singleton<GameManager> {
         state = GameState.play;
     }
 
-    public void Update() {
-        ++elapsedFrame;
-        StateUpdate();
-
-        Coroutine.Repeat(ref test, Test());
-
-        GameObjectsHitCheck();
-        GameObjectsUpdate();
-    }
-
-    IEnumerator test;
-    IEnumerator Test() {
-        Enemy e = pool.WakeUp(pool.enemys);
-        e?.Translate(new Vector2(1000, 100));
-
-        for(int i = 0; i < 100; ++i) {
+    IEnumerator clearCoroutine;
+    IEnumerator ClearCoroutine() {
+        for(int i = 0; i < 60; ++i) {
             yield return null;
         }
 
-        e = pool.WakeUp(pool.enemys);
-        e?.Translate(new Vector2(1000, 100));
-
-        for(int i = 0; i < 100; ++i) {
-            yield return null;
-        }
-
-        e = pool.WakeUp(pool.enemys);
-        e?.Translate(new Vector2(1000, 100));
+        state = GameState.standby;
     }
 
-    void StateUpdate() {
-        if(state == GameState.standby) {
-            Standby();
+    IEnumerator deathCoroutine;
+    IEnumerator DeathCoroutine() {
+        --playerLeft;
+
+        for(int i = 0; i < 60; ++i) {
+            yield return null;
         }
 
         if(playerLeft < 0) {
             state = GameState.gameover;
+        } else {
+            state = GameState.standby;
         }
 
-        if(state == GameState.gameover) {
-            pool.Sleep(pool.player);
-        } else if(target == 0) {
-            state = GameState.clear;
-        } else if(!pool.player.isActive) {
-            state = GameState.death;
-            --playerLeft;
-            Standby();
-        }
+        pool.Sleep(pool.playerBullets);
+        pool.Sleep(pool.enemys);
+        pool.Sleep(pool.enemyBullets);
     }
 
     /// <summary>当たり判定のチェックを行う</summary>
