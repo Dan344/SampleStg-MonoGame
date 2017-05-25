@@ -102,7 +102,7 @@ public abstract class GameObject {
     public virtual Vector2 Move(Vector2 vector) => position += vector;
 
     /// <summary>回転させる(現在の向き+degree)</summary>
-    /// <param name="degree">回転速度(左回り)</param>
+    /// <param name="speed">回転速度(左回り)</param>
     /// <returns>回転後の向き</returns>
     public virtual float Spin(float speed) => rotation += speed;
 
