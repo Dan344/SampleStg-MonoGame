@@ -101,23 +101,6 @@ public abstract class GameObject {
     /// <param name="vector">移動させたいvector</param>
     public virtual Vector2 Move(Vector2 vector) => position += vector;
 
-    /// <summary>回転させる(現在の向き+degree)</summary>
-    /// <param name="speed">回転速度(左回り)</param>
-    /// <returns>回転後の向き</returns>
-    public virtual float Spin(float speed) => rotation += speed;
-
-    /// <summary>rotationに基づいた現在の正面の向きを単位ベクトルで返す</summary>
-    public Vector2 GetFront() => Transform(UnitX, CreateRotationZ(ToRadians(rotation)));
-
-    /// <summary>rotationに基づいた現在の後ろの向きを単位ベクトルで返す</summary>
-    public Vector2 GetBack() => Transform(-UnitX, CreateRotationZ(ToRadians(rotation)));
-
-    /// <summary>rotationに基づいた現在の右の向きを単位ベクトルで返す</summary>
-    public Vector2 GetRight() => Transform(UnitY, CreateRotationZ(ToRadians(rotation)));
-
-    /// <summary>rotationに基づいた現在の左の向きを単位ベクトルで返す</summary>
-    public Vector2 GetLeft() => Transform(-UnitY, CreateRotationZ(ToRadians(rotation)));
-
     /// <summary>現在の正面に向かって移動する</summary>
     /// <param name="speed">速度</param>
     /// <returns>移動後の座標</returns>
@@ -137,6 +120,23 @@ public abstract class GameObject {
     /// <param name="speed">速度</param>
     /// <returns>移動後の座標</returns>
     public virtual Vector2 MoveLeft(float speed) => position += GetLeft() * speed;
+
+    /// <summary>rotationに基づいた現在の正面の向きを単位ベクトルで返す</summary>
+    public Vector2 GetFront() => Transform(UnitX, CreateRotationZ(ToRadians(rotation)));
+
+    /// <summary>rotationに基づいた現在の後ろの向きを単位ベクトルで返す</summary>
+    public Vector2 GetBack() => Transform(-UnitX, CreateRotationZ(ToRadians(rotation)));
+
+    /// <summary>rotationに基づいた現在の右の向きを単位ベクトルで返す</summary>
+    public Vector2 GetRight() => Transform(UnitY, CreateRotationZ(ToRadians(rotation)));
+
+    /// <summary>rotationに基づいた現在の左の向きを単位ベクトルで返す</summary>
+    public Vector2 GetLeft() => Transform(-UnitY, CreateRotationZ(ToRadians(rotation)));
+
+    /// <summary>回転させる(現在の向き+degree)</summary>
+    /// <param name="speed">回転速度(左回り)</param>
+    /// <returns>回転後の向き</returns>
+    public virtual float Spin(float speed) => rotation += speed;
 
     /// <summary>現在位置から指定座標を向くrotation(degree)が返される。移動はしない</summary>
     /// <param name="target">目標</param>
