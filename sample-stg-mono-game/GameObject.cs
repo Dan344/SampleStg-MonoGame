@@ -106,13 +106,37 @@ public abstract class GameObject {
     /// <returns>回転後の向き</returns>
     public virtual float Spin(float degree) => rotation += degree;
 
-    /// <summary>rotationに基づいた現在の向きを単位ベクトルで返す</summary>
+    /// <summary>rotationに基づいた現在の正面の向きを単位ベクトルで返す</summary>
     public Vector2 GetFront() => Transform(UnitX, CreateRotationZ(ToRadians(rotation)));
+
+    /// <summary>rotationに基づいた現在の後ろの向きを単位ベクトルで返す</summary>
+    public Vector2 GetBack() => Transform(-UnitX, CreateRotationZ(ToRadians(rotation)));
+
+    /// <summary>rotationに基づいた現在の右の向きを単位ベクトルで返す</summary>
+    public Vector2 GetRight() => Transform(UnitY, CreateRotationZ(ToRadians(rotation)));
+
+    /// <summary>rotationに基づいた現在の左の向きを単位ベクトルで返す</summary>
+    public Vector2 GetLeft() => Transform(-UnitY, CreateRotationZ(ToRadians(rotation)));
 
     /// <summary>現在の正面に向かって移動する</summary>
     /// <param name="speed">速度</param>
     /// <returns>移動後の座標</returns>
     public virtual Vector2 MoveFront(float speed) => position += GetFront() * speed;
+
+    /// <summary>現在の後ろに向かって移動する</summary>
+    /// <param name="speed">速度</param>
+    /// <returns>移動後の座標</returns>
+    public virtual Vector2 MoveBack(float speed) => position += GetBack() * speed;
+
+    /// <summary>現在の右に向かって移動する</summary>
+    /// <param name="speed">速度</param>
+    /// <returns>移動後の座標</returns>
+    public virtual Vector2 MoveRight(float speed) => position += GetRight() * speed;
+
+    /// <summary>現在の左に向かって移動する</summary>
+    /// <param name="speed">速度</param>
+    /// <returns>移動後の座標</returns>
+    public virtual Vector2 MoveLeft(float speed) => position += GetLeft() * speed;
 
     /// <summary>現在位置から指定座標を向くrotation(degree)が返される。移動はしない</summary>
     /// <param name="target">目標</param>
