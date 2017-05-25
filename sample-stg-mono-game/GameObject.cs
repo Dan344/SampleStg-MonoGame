@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using static Microsoft.Xna.Framework.MathHelper;
 using static System.Math;
+using static Microsoft.Xna.Framework.Vector2;
+using static Microsoft.Xna.Framework.Matrix;
 
 /// <summary>
 /// ゲーム中に登場するオブジェクトはこれを継承する。
@@ -51,7 +53,7 @@ public abstract class GameObject {
         spriteColor = Color.White;
         spriteFlip = SpriteEffects.None;
         spriteDepth = 0;
-        position = Vector2.Zero;
+        position = Zero;
         rotation = 0;
         scale = 1;
     }
@@ -105,10 +107,7 @@ public abstract class GameObject {
     public virtual float Spin(float degree) => rotation += degree;
 
     /// <summary>rotationに基づいた現在の向きを単位ベクトルで返す</summary>
-    public Vector2 GetFront() {
-        Matrix matrix = Matrix.CreateRotationZ(ToRadians(rotation));
-        return Vector2.Transform(Vector2.UnitX, matrix);
-    }
+    public Vector2 GetFront() => Transform(UnitX, CreateRotationZ(ToRadians(rotation)));
 
     /// <summary>現在の正面に向かって移動する</summary>
     /// <param name="speed">速度</param>
