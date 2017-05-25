@@ -102,9 +102,9 @@ public abstract class GameObject {
     public virtual Vector2 Move(Vector2 vector) => position += vector;
 
     /// <summary>回転させる(現在の向き+degree)</summary>
-    /// <param name="degree">回転速度</param>
+    /// <param name="degree">回転速度(左回り)</param>
     /// <returns>回転後の向き</returns>
-    public virtual float Spin(float degree) => rotation += degree;
+    public virtual float Spin(float speed) => rotation += speed;
 
     /// <summary>rotationに基づいた現在の正面の向きを単位ベクトルで返す</summary>
     public Vector2 GetFront() => Transform(UnitX, CreateRotationZ(ToRadians(rotation)));
