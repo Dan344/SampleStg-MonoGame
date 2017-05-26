@@ -144,19 +144,35 @@ public abstract class GameObject {
     /// <returns>回転後の向き</returns>
     public virtual float Spin(float speed) => rotation += speed;
 
-    public bool LookAtTarget(Vector2 target, float speed) {
-        float targetDegree = NormalizeDegree(ToTargetDegree(target));
-        float delta = DeltaAngle(rotation, targetDegree);
-        System.Diagnostics.Debug.WriteLine(delta + " my: " + rotation + " target: " + targetDegree);
+    /// <summary>角度を目標の角度に速度を指定して回転させる。角度を返すだけ</summary>
+    /// <param name="current">変換したい角度</param>
+    /// <param name="target">目標の角度</param>
+    /// <param name="speed">回転の速度</param>
+    /// <returns>回転後の角度</returns>
+    public float DegreeFit(float current, float target, float speed) {
+        float delta = DeltaAngle(current, target);
 
-        if(delta < 0) {
-            Spin(-speed);
+        if(delta < -speed) {
+            current -= speed;
+        } else if(delta > speed) {
+            current += speed;
         } else {
-            Spin(+speed);
+            current = target;
         }
 
-        return false;
+        return current;
+    }
 
+    /// <summary>
+    /// 指定したターゲットの方向に指定した速度で向く。ターゲットの方向を向いたらtrue
+    /// </summary>
+    /// <param name="target">目標の座標</param>
+    /// <param name="speed">回転速度</param>
+    /// <returns>ターゲットの方向を向いているか</returns>
+    public bool LookAtTarget(Vector2 target, float speed) {
+        float targetDegree = NormalizeDegree(ToTargetDegree(target));
+        rotation = DegreeFit(rotation, targetDegree, speed);
+        return rotation == targetDegree;
     }
 
     /// <summary>rotationに基づいた現在の正面の向きを単位ベクトルで返す</summary>

@@ -15,9 +15,13 @@ public class Enemy : CollisionObject {
         //Rotate(ToTargetDegree(pool.player.position));
         //MoveFront(1);
 
-        if(manager.elapsedFrame % 60 == 0) {
-            //Shot();
+        if(LookAtTarget(pool.player.position, 1)) {
+            Shot();
         }
+
+        //if(manager.elapsedFrame % 60 == 0) {
+        //    //Shot();
+        //}
     }
 
     public override void WakeUp() {
