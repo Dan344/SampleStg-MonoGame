@@ -31,9 +31,7 @@ public class Enemy : CollisionObject {
     protected void Shot() {
         var(degree, length) = ToTargetDegLen(pool.player.position);
         EnemyBullet eb = pool.WakeUp(pool.enemyBullets);
-        eb?.Translate(position);
-        eb?.Rotate(degree);
-        eb?.SetSpeed(length / 60); //必ず60フレームで到達する
+        eb?.Init(position, degree, length / 60); //必ず60フレームで到達する
     }
 
     public override void HitAction(CollisionObject other) {
