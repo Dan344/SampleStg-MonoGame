@@ -6,6 +6,10 @@ using System.Diagnostics;
 public class EnemyBullet : CollisionObject {
     float speed = 8;
 
+    public void SetSpeed(float speed) {
+        this.speed = speed;
+    }
+
     /// <summary>毎フレーム呼ぶ</summary>
     public override void Update() {
         MoveFront(speed);

@@ -121,6 +121,11 @@ public abstract class GameObject {
     /// <returns>移動後の座標</returns>
     public virtual Vector2 MoveLeft(float speed) => position += GetLeft() * speed;
 
+    /// <summary>回転させる(現在の向き+degree)</summary>
+    /// <param name="speed">回転速度(左回り)</param>
+    /// <returns>回転後の向き</returns>
+    public virtual float Spin(float speed) => rotation += speed;
+
     /// <summary>rotationに基づいた現在の正面の向きを単位ベクトルで返す</summary>
     public Vector2 GetFront() => Transform(UnitX, CreateRotationZ(ToRadians(rotation)));
 
@@ -133,16 +138,27 @@ public abstract class GameObject {
     /// <summary>rotationに基づいた現在の左の向きを単位ベクトルで返す</summary>
     public Vector2 GetLeft() => Transform(-UnitY, CreateRotationZ(ToRadians(rotation)));
 
-    /// <summary>回転させる(現在の向き+degree)</summary>
-    /// <param name="speed">回転速度(左回り)</param>
-    /// <returns>回転後の向き</returns>
-    public virtual float Spin(float speed) => rotation += speed;
+    /// <summary>現在位置から目標への向き(degree)が返される。移動はしない</summary>
+    public float ToTargetDegree(Vector2 target) => Vector2Degree(ToTargetVector(target));
 
-    /// <summary>現在位置から指定座標を向くrotation(degree)が返される。移動はしない</summary>
-    /// <param name="target">目標</param>
-    /// <returns>目標方向</returns>
-    public float GetLookAt(Vector2 target) {
-        Vector2 dv = target - position;
-        return ToDegrees((float)Atan2(dv.Y, dv.X));
+    /// <summary>現在位置から目標へのベクトルが返される。</summary>
+    public Vector2 ToTargetVector(Vector2 target) => target - position;
+
+    /// <summary>現在位置から目標への単位ベクトルが返される。</summary>
+    public Vector2 ToTargetNormalizedVector(Vector2 target) => Normalize(target - position);
+
+    /// <summary>現在位置から目標への距離を返す</summary>
+    public float ToTargetLength(Vector2 target) => ToTargetVector(target).Length();
+
+    /// <summary>現在位置から目標への角度と距離をTupleで返す</summary>
+    public(float degree, float length) ToTargetDegLen(Vector2 target) {
+        Vector2 v = ToTargetVector(target);
+        return (Vector2Degree(v), v.Length());
     }
+
+    /// <summary>ベクトルを向き(degree)に変換する</summary>
+    public float Vector2Degree(Vector2 vector) => ToDegrees((float)Atan2(vector.Y, vector.X));
+
+    /// <summary>角度(degree)をベクトルに変換する</summary>
+    public Vector2 Degree2Vector(float degree) => Transform(UnitX, CreateRotationZ(ToRadians(degree)));
 }
