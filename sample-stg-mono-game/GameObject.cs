@@ -30,19 +30,6 @@ public abstract class GameObject {
         protected set => _rotation = NormalizeDegree(value);
     }
 
-    public float NormalizeDegree(float degree) {
-        if(degree >= 360) {
-            degree -= 360;
-        } else if(degree < 0) {
-            degree += 360;
-        } else {
-            return degree;
-        }
-
-        return NormalizeDegree(degree);
-    }
-
-
     /// <summary>gameObjectの現在の大きさ</summary>
     public float scale { get; set; }
 
@@ -251,4 +238,19 @@ public abstract class GameObject {
 
     /// <summary>角度(degree)をベクトルに変換する</summary>
     public Vector2 Degree2Vector(float degree) => Transform(UnitX, CreateRotationZ(ToRadians(degree)));
+
+    /// <summary>角度(degree)を正規化する(0°以上360°未満。360は0になる)</summary>
+    /// <param name="degree">正規化したい角度</param>
+    /// <returns>正規化後の角度</returns>
+    public float NormalizeDegree(float degree) {
+        if(degree >= 360) {
+            degree -= 360;
+        } else if(degree < 0) {
+            degree += 360;
+        } else {
+            return degree;
+        }
+
+        return NormalizeDegree(degree);
+    }
 }
