@@ -109,35 +109,35 @@ public abstract class GameObject {
 
     /// <summary>渡した座標に移動する</summary>
     /// <param name="position">移動したい場所</param>
-    public virtual Vector2 Translate(Vector2 position) => this.position = position;
+    public Vector2 Translate(Vector2 position) => this.position = position;
 
     /// <summary>指定した方向を向く</summary>
     /// <param name="degree">度数</param>
-    public virtual float Rotate(float degree) => rotation = degree;
+    public float Rotate(float degree) => rotation = degree;
 
     /// <summary>渡したベクトルに向けて移動する</summary>
     /// <param name="vector">移動させたいvector</param>
-    public virtual Vector2 Move(Vector2 vector) => position += vector;
+    public Vector2 Move(Vector2 vector) => position += vector;
 
     /// <summary>現在の正面に向かって移動する</summary>
     /// <param name="speed">速度</param>
     /// <returns>移動後の座標</returns>
-    public virtual Vector2 MoveFront(float speed) => position += GetFront() * speed;
+    public Vector2 MoveFront(float speed) => position += GetFront() * speed;
 
     /// <summary>現在の後ろに向かって移動する</summary>
     /// <param name="speed">速度</param>
     /// <returns>移動後の座標</returns>
-    public virtual Vector2 MoveBack(float speed) => position += GetBack() * speed;
+    public Vector2 MoveBack(float speed) => position += GetBack() * speed;
 
     /// <summary>現在の右に向かって移動する</summary>
     /// <param name="speed">速度</param>
     /// <returns>移動後の座標</returns>
-    public virtual Vector2 MoveRight(float speed) => position += GetRight() * speed;
+    public Vector2 MoveRight(float speed) => position += GetRight() * speed;
 
     /// <summary>現在の左に向かって移動する</summary>
     /// <param name="speed">速度</param>
     /// <returns>移動後の座標</returns>
-    public virtual Vector2 MoveLeft(float speed) => position += GetLeft() * speed;
+    public Vector2 MoveLeft(float speed) => position += GetLeft() * speed;
 
     /// <summary>現在位置から目標位置に向かって指定した速度で移動する。目標座標に到達したらtrue</summary>
     /// <param name="target">目標座標</param>
@@ -151,7 +151,7 @@ public abstract class GameObject {
     /// <summary>回転させる(現在の向き+degree)</summary>
     /// <param name="speed">回転速度(左回り)</param>
     /// <returns>回転後の向き</returns>
-    public virtual float Spin(float speed) => rotation += speed;
+    public float Spin(float speed) => rotation += speed;
 
     /// <summary>
     /// 指定したターゲットの方向に指定した速度で向く。ターゲットの方向を向いたらtrue
