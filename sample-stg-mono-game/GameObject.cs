@@ -139,11 +139,6 @@ public abstract class GameObject {
     /// <returns>移動後の座標</returns>
     public virtual Vector2 MoveLeft(float speed) => position += GetLeft() * speed;
 
-    /// <summary>回転させる(現在の向き+degree)</summary>
-    /// <param name="speed">回転速度(左回り)</param>
-    /// <returns>回転後の向き</returns>
-    public virtual float Spin(float speed) => rotation += speed;
-
     /// <summary>現在位置から目標位置に向かって指定した速度で移動する。目標座標に到達したらtrue</summary>
     /// <param name="target">目標座標</param>
     /// <param name="speed">速度</param>
@@ -153,43 +148,10 @@ public abstract class GameObject {
         return position == target;
     }
 
-    /// <summary>
-    /// ある座標を目標の座標にpowerの速度で移動する。targetにぴったりフィット。
-    /// </summary>
-    /// <param name="current">現在座標</param>
-    /// <param name="target">目標座標</param>
-    /// <param name="power">力</param>
-    /// <returns>移動後の座標</returns>
-    public Vector2 VectorFit(Vector2 current, Vector2 target, float power) {
-        Vector2 toTarget = target - current;
-
-        if(toTarget.Length() > power) {
-            current += Normalize(toTarget) * power;
-        } else {
-            current = target;
-        }
-
-        return current;
-    }
-
-    /// <summary>角度を目標の角度に速度を指定して回転させる。角度を返すだけ</summary>
-    /// <param name="current">変換したい角度</param>
-    /// <param name="target">目標の角度</param>
-    /// <param name="speed">回転の速度</param>
-    /// <returns>回転後の角度</returns>
-    public float DegreeFit(float current, float target, float speed) {
-        float delta = DeltaAngle(current, target);
-
-        if(delta < -speed) {
-            current -= speed;
-        } else if(delta > speed) {
-            current += speed;
-        } else {
-            current = target;
-        }
-
-        return current;
-    }
+    /// <summary>回転させる(現在の向き+degree)</summary>
+    /// <param name="speed">回転速度(左回り)</param>
+    /// <returns>回転後の向き</returns>
+    public virtual float Spin(float speed) => rotation += speed;
 
     /// <summary>
     /// 指定したターゲットの方向に指定した速度で向く。ターゲットの方向を向いたらtrue
@@ -233,11 +195,43 @@ public abstract class GameObject {
         return (Vector2Degree(v), v.Length());
     }
 
-    /// <summary>ベクトルを向き(degree)に変換する</summary>
-    public float Vector2Degree(Vector2 vector) => ToDegrees((float)Atan2(vector.Y, vector.X));
+    /// <summary>
+    /// ある座標を目標の座標にpowerの速度で移動する。targetにぴったりフィット。
+    /// </summary>
+    /// <param name="current">現在座標</param>
+    /// <param name="target">目標座標</param>
+    /// <param name="power">力</param>
+    /// <returns>移動後の座標</returns>
+    public Vector2 VectorFit(Vector2 current, Vector2 target, float power) {
+        Vector2 toTarget = target - current;
 
-    /// <summary>角度(degree)をベクトルに変換する</summary>
-    public Vector2 Degree2Vector(float degree) => Transform(UnitX, CreateRotationZ(ToRadians(degree)));
+        if(toTarget.Length() > power) {
+            current += Normalize(toTarget) * power;
+        } else {
+            current = target;
+        }
+
+        return current;
+    }
+
+    /// <summary>角度を目標の角度に速度を指定して回転させる。角度を返すだけ</summary>
+    /// <param name="current">変換したい角度</param>
+    /// <param name="target">目標の角度</param>
+    /// <param name="speed">回転の速度</param>
+    /// <returns>回転後の角度</returns>
+    public float DegreeFit(float current, float target, float speed) {
+        float delta = DeltaAngle(current, target);
+
+        if(delta < -speed) {
+            current -= speed;
+        } else if(delta > speed) {
+            current += speed;
+        } else {
+            current = target;
+        }
+
+        return current;
+    }
 
     /// <summary>２つの角度(degree)の差分を求める</summary>
     /// <param name="current">基礎とする角度(degree)。正規化されていること</param>
@@ -251,4 +245,10 @@ public abstract class GameObject {
 
         return result;
     }
+
+    /// <summary>ベクトルを向き(degree)に変換する</summary>
+    public float Vector2Degree(Vector2 vector) => ToDegrees((float)Atan2(vector.Y, vector.X));
+
+    /// <summary>角度(degree)をベクトルに変換する</summary>
+    public Vector2 Degree2Vector(float degree) => Transform(UnitX, CreateRotationZ(ToRadians(degree)));
 }
