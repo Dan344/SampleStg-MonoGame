@@ -24,7 +24,7 @@ public abstract class GameObject {
     public Vector2 position { get; protected set; }
 
     float _rotation;
-    /// <summary>gameObjectの現在の向き(degree, 0:右 90:上)</summary>
+    /// <summary>gameObjectの現在の向き(degree, 0:右 90:下)</summary>
     public float rotation {
         get => _rotation;
         protected set => _rotation = NormalizeDegree(value);

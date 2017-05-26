@@ -9,10 +9,10 @@ public class Enemy : CollisionObject {
     }
 
     public override void Update() {
-        //Spin(-1);
-        //System.Diagnostics.Debug.WriteLine(MathHelper.ToRadians(rotation));
-        Rotate(ToTargetDegree(pool.player.position));
-        MoveFront(1);
+        Spin(1);
+        System.Diagnostics.Debug.WriteLine((rotation));
+        //Rotate(ToTargetDegree(pool.player.position));
+        //MoveFront(1);
 
         if(manager.elapsedFrame % 60 == 0) {
             Shot();
