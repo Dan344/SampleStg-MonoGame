@@ -11,7 +11,7 @@ public class Enemy : CollisionObject {
     public override void Update() {
         //Spin(-1);
         //System.Diagnostics.Debug.WriteLine(MathHelper.ToRadians(rotation));
-        Rotate(ToTargetRadian(pool.player.position));
+        Rotate(ToTargetDegree(pool.player.position));
         MoveFront(1);
 
         if(manager.elapsedFrame % 60 == 0) {
@@ -29,9 +29,9 @@ public class Enemy : CollisionObject {
     }
 
     protected void Shot() {
-        var(radian, length) = ToTargetRadLen(pool.player.position);
+        var(degree, length) = ToTargetDegLen(pool.player.position);
         EnemyBullet eb = pool.WakeUp(pool.enemyBullets);
-        eb?.Init(position, radian, length / 60); //必ず60フレームで到達する
+        eb?.Init(position, degree, length / 60); //必ず60フレームで到達する
     }
 
     public override void HitAction(CollisionObject other) {

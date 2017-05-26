@@ -22,13 +22,8 @@ public abstract class GameObject {
 
     /// <summary>gameObjectの現在座標</summary>
     public Vector2 position { get; protected set; }
-
-    private float _rotation;
-    /// <summary>gameObjectの現在の向き(radian)</summary>
-    public float rotation {
-        get => _rotation;
-        protected set => _rotation = WrapAngle(value);
-    }
+    /// <summary>gameObjectの現在の向き(degree, 0:右 90:上)</summary>
+    public float rotation { get; protected set; }
 
     /// <summary>gameObjectの現在の大きさ</summary>
     public float scale { get; set; }
@@ -84,7 +79,7 @@ public abstract class GameObject {
                          , position
                          , null
                          , spriteColor
-                         , rotation + ToRadians((float)spriteFront)
+                         , ToRadians(rotation + (float)spriteFront)
                          , new Vector2(sprite.Width / 2, sprite.Height / 2) //pivot
                          , scale
                          , spriteFlip
@@ -99,8 +94,8 @@ public abstract class GameObject {
     public virtual Vector2 Translate(Vector2 position) => this.position = position;
 
     /// <summary>指定した方向を向く</summary>
-    /// <param name="radian">度数</param>
-    public virtual float Rotate(float radian) => rotation = radian;
+    /// <param name="degree">度数</param>
+    public virtual float Rotate(float degree) => rotation = degree;
 
     /// <summary>渡したベクトルに向けて移動する</summary>
     /// <param name="vector">移動させたいvector</param>
@@ -129,25 +124,22 @@ public abstract class GameObject {
     /// <summary>回転させる(現在の向き+degree)</summary>
     /// <param name="speed">回転速度(左回り)</param>
     /// <returns>回転後の向き</returns>
-    public virtual float Spin(float speed) => rotation += ToRadians(speed);
+    public virtual float Spin(float speed) => rotation += speed;
 
     /// <summary>rotationに基づいた現在の正面の向きを単位ベクトルで返す</summary>
-    public Vector2 GetFront() => Transform(UnitX, CreateRotationZ(rotation));
+    public Vector2 GetFront() => Transform(UnitX, CreateRotationZ(ToRadians(rotation)));
 
     /// <summary>rotationに基づいた現在の後ろの向きを単位ベクトルで返す</summary>
-    public Vector2 GetBack() => Transform(-UnitX, CreateRotationZ(rotation));
+    public Vector2 GetBack() => Transform(-UnitX, CreateRotationZ(ToRadians(rotation)));
 
     /// <summary>rotationに基づいた現在の右の向きを単位ベクトルで返す</summary>
-    public Vector2 GetRight() => Transform(UnitY, CreateRotationZ(rotation));
+    public Vector2 GetRight() => Transform(UnitY, CreateRotationZ(ToRadians(rotation)));
 
     /// <summary>rotationに基づいた現在の左の向きを単位ベクトルで返す</summary>
-    public Vector2 GetLeft() => Transform(-UnitY, CreateRotationZ(rotation));
+    public Vector2 GetLeft() => Transform(-UnitY, CreateRotationZ(ToRadians(rotation)));
 
     /// <summary>現在位置から目標への向き(degree)が返される。移動はしない</summary>
     public float ToTargetDegree(Vector2 target) => Vector2Degree(ToTargetVector(target));
-
-    /// <summary>現在位置から目標への向き(radian)が返される。移動はしない</summary>
-    public float ToTargetRadian(Vector2 target) => Vector2Radian(ToTargetVector(target));
 
     /// <summary>現在位置から目標へのベクトルが返される。</summary>
     public Vector2 ToTargetVector(Vector2 target) => target - position;
@@ -163,15 +155,6 @@ public abstract class GameObject {
         Vector2 v = ToTargetVector(target);
         return (Vector2Degree(v), v.Length());
     }
-
-    /// <summary>現在位置から目標への角度と距離をTupleで返す</summary>
-    public(float radian, float length) ToTargetRadLen(Vector2 target) {
-        Vector2 v = ToTargetVector(target);
-        return (Vector2Radian(v), v.Length());
-    }
-
-    /// <summary>ベクトルを向き(radian)に変換する</summary>
-    public float Vector2Radian(Vector2 vector) => (float)Atan2(vector.Y, vector.X);
 
     /// <summary>ベクトルを向き(degree)に変換する</summary>
     public float Vector2Degree(Vector2 vector) => ToDegrees((float)Atan2(vector.Y, vector.X));
