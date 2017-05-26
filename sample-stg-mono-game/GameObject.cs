@@ -22,8 +22,13 @@ public abstract class GameObject {
 
     /// <summary>gameObjectの現在座標</summary>
     public Vector2 position { get; protected set; }
+
+    private float _rotation;
     /// <summary>gameObjectの現在の向き(radian)</summary>
-    public float rotation { get; protected set; }
+    public float rotation {
+        get => _rotation;
+        protected set => _rotation = WrapAngle(value);
+    }
 
     /// <summary>gameObjectの現在の大きさ</summary>
     public float scale { get; set; }
