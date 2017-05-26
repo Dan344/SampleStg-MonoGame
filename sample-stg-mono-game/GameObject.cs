@@ -144,6 +144,34 @@ public abstract class GameObject {
     /// <returns>回転後の向き</returns>
     public virtual float Spin(float speed) => rotation += speed;
 
+    /// <summary>現在位置から目標位置に向かって指定した速度で移動する。目標座標に到達したらtrue</summary>
+    /// <param name="target">目標座標</param>
+    /// <param name="speed">速度</param>
+    /// <returns>目標座標に到達したらtrue</returns>
+    public bool Move2Target(Vector2 target, float speed) {
+        position = VectorFit(position, target, speed);
+        return position == target;
+    }
+
+    /// <summary>
+    /// ある座標を目標の座標にpowerの速度で移動する。targetにぴったりフィット。
+    /// </summary>
+    /// <param name="current">現在座標</param>
+    /// <param name="target">目標座標</param>
+    /// <param name="power">力</param>
+    /// <returns>移動後の座標</returns>
+    public Vector2 VectorFit(Vector2 current, Vector2 target, float power) {
+        Vector2 toTarget = target - current;
+
+        if(toTarget.Length() > power) {
+            current += Normalize(toTarget) * power;
+        } else {
+            current = target;
+        }
+
+        return current;
+    }
+
     /// <summary>角度を目標の角度に速度を指定して回転させる。角度を返すだけ</summary>
     /// <param name="current">変換したい角度</param>
     /// <param name="target">目標の角度</param>

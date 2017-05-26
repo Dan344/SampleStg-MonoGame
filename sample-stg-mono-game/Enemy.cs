@@ -10,14 +10,15 @@ public class Enemy : CollisionObject {
 
     public override void Update() {
         //Spin(1);
-        LookAtTarget(pool.player.position, 1);
+        //LookAtTarget(pool.player.position, 1);
         //System.Diagnostics.Debug.WriteLine((rotation));
         //Rotate(ToTargetDegree(pool.player.position));
         //MoveFront(1);
+        Move2Target(pool.player.position, 3);
 
-        if(LookAtTarget(pool.player.position, 1)) {
-            Shot();
-        }
+        //if(LookAtTarget(pool.player.position, 1)) {
+        //    Shot();
+        //}
 
         //if(manager.elapsedFrame % 60 == 0) {
         //    //Shot();
