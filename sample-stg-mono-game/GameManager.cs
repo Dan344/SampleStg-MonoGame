@@ -92,10 +92,13 @@ public class GameManager : Singleton<GameManager> {
 
         target = 0;
 
-        for(int i = 0; i < 8; ++i) {
-            Enemy e = pool.WakeUp(pool.enemys);
-            e?.Translate(new Vector2(100 * i, 100));
-        }
+        //for(int i = 0; i < 8; ++i) {
+        //    Enemy e = pool.WakeUp(pool.enemys);
+        //    e?.Translate(new Vector2(100 * (i+1), 300));
+        //}
+
+        Enemy e = pool.WakeUp(pool.enemys);
+        e?.Translate(new Vector2(100 * (7 + 1), 300));
 
         state = GameState.play;
     }

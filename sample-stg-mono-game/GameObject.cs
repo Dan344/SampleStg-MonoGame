@@ -144,6 +144,21 @@ public abstract class GameObject {
     /// <returns>回転後の向き</returns>
     public virtual float Spin(float speed) => rotation += speed;
 
+    public bool LookAtTarget(Vector2 target, float speed) {
+        float targetDegree = NormalizeDegree(ToTargetDegree(target));
+        float delta = DeltaAngle(rotation, targetDegree);
+        System.Diagnostics.Debug.WriteLine(delta + " my: " + rotation + " target: " + targetDegree);
+
+        if(delta < 0) {
+            Spin(-speed);
+        } else {
+            Spin(+speed);
+        }
+
+        return false;
+
+    }
+
     /// <summary>rotationに基づいた現在の正面の向きを単位ベクトルで返す</summary>
     public Vector2 GetFront() => Transform(UnitX, CreateRotationZ(ToRadians(rotation)));
 
@@ -179,4 +194,17 @@ public abstract class GameObject {
 
     /// <summary>角度(degree)をベクトルに変換する</summary>
     public Vector2 Degree2Vector(float degree) => Transform(UnitX, CreateRotationZ(ToRadians(degree)));
+
+    /// <summary>２つの角度(degree)の差分を求める</summary>
+    /// <param name="current">基礎とする角度(degree)。正規化されていること</param>
+    /// <param name="target">相手とする角度(degree)。正規化されていること</param>
+    /// <returns>-180~n~180</returns>
+    public float DeltaAngle(float current, float target) {
+        float result = target - current;
+
+        if(result >= 180) result -= 360;
+        else if(result <= -180) result += 360;
+
+        return result;
+    }
 }
