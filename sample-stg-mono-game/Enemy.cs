@@ -1,20 +1,23 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections;
 
-public class Enemy : CollisionObject {
+public abstract class Enemy : CollisionObject {
     protected int score = 100;
 
-    public Enemy() {
+    public Enemy() { }
 
-    }
+    //public override void Initialize();
 
     public override void Update() {
+        Coroutine.Repeat(ref normalAction, NormalAction());
+
         //Spin(1);
         //LookAtTarget(pool.player.position, 1);
         //System.Diagnostics.Debug.WriteLine((rotation));
         //Rotate(ToTargetDegree(pool.player.position));
         //MoveFront(1);
-        Move2Target(pool.player.position, 3);
+        //Move2Target(pool.player.position, 3);
 
         //if(LookAtTarget(pool.player.position, 1)) {
         //    Shot();
@@ -25,6 +28,9 @@ public class Enemy : CollisionObject {
         //}
     }
 
+    IEnumerator normalAction;
+    protected abstract IEnumerator NormalAction();
+
     public override void WakeUp() {
         ++manager.target;
         base.WakeUp();
@@ -34,7 +40,7 @@ public class Enemy : CollisionObject {
         base.Sleep();
     }
 
-    protected void Shot() {
+    protected virtual void Shot() {
         var(degree, length) = ToTargetDegLen(pool.player.position);
         EnemyBullet eb = pool.WakeUp(pool.enemyBullets);
         eb?.Init(position, degree, length / 60); //必ず60フレームで到達する

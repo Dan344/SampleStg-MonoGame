@@ -36,7 +36,7 @@ public class ObjectPool : Singleton<ObjectPool> {
         }
 
         for(int i = 0; i < 10; ++i) {
-            enemys.Add(new Enemy {
+            enemys.Add(new Enemy0 {
                 sprite = sampleTexture,
                 spriteColor = Color.Red,
                 spriteFront = GameObject.SpriteFront.top
