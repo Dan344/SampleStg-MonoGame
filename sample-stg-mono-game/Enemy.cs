@@ -12,6 +12,20 @@ public abstract class Enemy : CollisionObject {
     public override void Update() {
         Coroutine.Repeat(ref normalAction, NormalAction());
 
+        //if(normalAction == null) {
+
+        //    //Console.WriteLine("hoge");
+        //    normalAction = NormalAction();
+        //}
+
+        //if(!normalAction?.MoveNext() ?? false) {
+        //    normalAction = null;
+        //}
+
+
+        //normalAction?.MoveNext();
+
+
         //Spin(1);
         //LookAtTarget(pool.player.position, 1);
         //System.Diagnostics.Debug.WriteLine((rotation));
