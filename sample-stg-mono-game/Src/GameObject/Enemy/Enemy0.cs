@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 
 public class Enemy0 : Enemy {
+    protected override void Init() {
+        hoge?.Reset();
+        base.Init();
+    }
 
     protected override IEnumerator NormalAction() {
         for(int i = 0; i < 30; ++i) {
@@ -30,6 +34,7 @@ public class Enemy0 : Enemy {
             yield return null;
         }
     }
+
 
     Coroutine hoge = new Coroutine();
     protected IEnumerator Hoge() {

@@ -11,6 +11,11 @@ public abstract class CollisionObject : GameObject {
         collisionArea = new Rectangle(0, 0, 32, 32);
     }
 
+    protected override void Init() {
+        collisionArea = new Rectangle(0, 0, 32, 32);
+        base.Init();
+    }
+
     public bool CollisionCheck(CollisionObject other) {
         collisionArea.Location = new Point((int)position.X, (int)position.Y);
         other.collisionArea.Location = new Point((int)other.position.X, (int)other.position.Y);

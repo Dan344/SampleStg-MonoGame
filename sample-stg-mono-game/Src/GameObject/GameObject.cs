@@ -53,14 +53,21 @@ public abstract class GameObject {
         pool = ObjectPool.instance;
         manager = GameManager.instance;
 
-        isActive = false;
         sprite = null;
         spriteColor = Color.White;
         spriteFlip = SpriteEffects.None;
         spriteDepth = 0;
+        spriteFront = SpriteFront.right;
+
+        Init();
+    }
+
+    protected virtual void Init() {
         position = Zero;
         rotation = 0;
         scale = 1;
+
+        isActive = false;
     }
 
     /// <summary>poolに寝かす時の設定</summary>
@@ -70,6 +77,7 @@ public abstract class GameObject {
 
     /// <summary>poolから起こす時の初期化</summary>
     public virtual void WakeUp() {
+        Init();
         isActive = true;
     }
 

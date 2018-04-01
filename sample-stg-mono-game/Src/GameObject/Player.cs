@@ -3,8 +3,9 @@
 public class Player : CollisionObject {
     public float speed = 5;
 
-    public Player() {
-        //Debug.WriteLine(input);
+    protected override void Init() {
+        speed = 5;
+        base.Init();
     }
 
     /// <summary>

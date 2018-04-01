@@ -5,11 +5,11 @@ using System.Collections;
 public abstract class Enemy : CollisionObject {
     protected int score = 100;
 
-    public Enemy() {
-        normalAction = new Coroutine();
+    protected override void Init() {
+        score = 100;
+        normalAction?.Reset();
+        base.Init();
     }
-
-    //public override void Initialize();
 
     public override void Update() {
         //Coroutine.Repeat(ref normalAction, NormalAction());
@@ -46,9 +46,7 @@ public abstract class Enemy : CollisionObject {
         //}
     }
 
-    Coroutine normalAction;
-
-    //IEnumerator normalAction;
+    Coroutine normalAction = new Coroutine();
     protected abstract IEnumerator NormalAction();
 
     public override void WakeUp() {
@@ -63,7 +61,7 @@ public abstract class Enemy : CollisionObject {
     protected virtual void Shot() {
         var(degree, length) = ToTargetDegLen(pool.player.position);
         EnemyBullet eb = pool.WakeUp(pool.enemyBullets);
-        eb?.Init(position, degree, length / 60); //必ず60フレームで到達する
+        eb?.Set(position, degree, length / 60); //必ず60フレームで到達する
     }
 
     public override void HitAction(CollisionObject other) {

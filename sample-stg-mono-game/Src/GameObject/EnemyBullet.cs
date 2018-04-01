@@ -4,13 +4,18 @@ using static CONST;
 public class EnemyBullet : CollisionObject {
     float speed = 8;
 
+    protected override void Init() {
+        speed = 8;
+        base.Init();
+    }
+
     /// <summary>
     /// WakeUp後の初期化
     /// </summary>
     /// <param name="position">座標</param>
     /// <param name="rotation">向き</param>
     /// <param name="speed">速度</param>
-    public virtual void Init(Vector2 position, float rotation, float speed) {
+    public virtual void Set(Vector2 position, float rotation, float speed) {
         this.position = position;
         this.rotation = rotation;
         this.speed = MathHelper.Clamp(speed, 1, 30);
