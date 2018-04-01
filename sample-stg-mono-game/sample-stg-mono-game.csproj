@@ -43,23 +43,23 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Coroutine.cs" />
-    <Compile Include="Enemy.cs" />
-    <Compile Include="EnemyBullet.cs" />
-    <Compile Include="Enemy\Enemy0.cs" />
-    <Compile Include="Game1.cs" />
-    <Compile Include="CollisionObject.cs" />
-    <Compile Include="GameManager.cs" />
-    <Compile Include="GameObject.cs" />
-    <Compile Include="Input.cs" />
-    <Compile Include="ObjectPool.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="PlayerBullet.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Src\Manager\Coroutine.cs" />
+    <Compile Include="Src\GameObject\Enemy.cs" />
+    <Compile Include="Src\GameObject\EnemyBullet.cs" />
+    <Compile Include="Src\GameObject\Enemy\Enemy0.cs" />
+    <Compile Include="Src\Game1.cs" />
+    <Compile Include="Src\GameObject\CollisionObject.cs" />
+    <Compile Include="Src\Manager\GameManager.cs" />
+    <Compile Include="Src\GameObject\GameObject.cs" />
+    <Compile Include="Src\Manager\Input.cs" />
+    <Compile Include="Src\Manager\ObjectPool.cs" />
+    <Compile Include="Src\GameObject\Player.cs" />
+    <Compile Include="Src\GameObject\PlayerBullet.cs" />
+    <Compile Include="Src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CONST.cs" />
-    <Compile Include="SequenceManager.cs" />
-    <Compile Include="Singleton.cs" />
+    <Compile Include="Src\CONST.cs" />
+    <Compile Include="Src\Manager\SequenceManager.cs" />
+    <Compile Include="Src\Singleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
