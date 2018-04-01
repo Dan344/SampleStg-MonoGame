@@ -13,7 +13,7 @@ public class Enemy0 : Enemy {
             yield return null;
         }
 
-        while(!Coroutine.Repeat(ref hoge, Hoge())) {
+        while(hoge.Repeat(Hoge())) {
             yield return null;
         }
 
@@ -31,7 +31,7 @@ public class Enemy0 : Enemy {
         }
     }
 
-    IEnumerator hoge;
+    Coroutine hoge = new Coroutine();
     protected IEnumerator Hoge() {
         for(int i = 0; i < 100; ++i) {
             if(i % 2 == 0) {

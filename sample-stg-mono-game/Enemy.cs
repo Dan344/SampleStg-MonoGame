@@ -5,12 +5,16 @@ using System.Collections;
 public abstract class Enemy : CollisionObject {
     protected int score = 100;
 
-    public Enemy() { }
+    public Enemy() {
+        normalAction = new Coroutine();
+    }
 
     //public override void Initialize();
 
     public override void Update() {
-        Coroutine.Repeat(ref normalAction, NormalAction());
+        //Coroutine.Repeat(ref normalAction, NormalAction());
+
+        normalAction.Repeat(NormalAction());
 
         //if(normalAction == null) {
 
@@ -42,7 +46,9 @@ public abstract class Enemy : CollisionObject {
         //}
     }
 
-    IEnumerator normalAction;
+    Coroutine normalAction;
+
+    //IEnumerator normalAction;
     protected abstract IEnumerator NormalAction();
 
     public override void WakeUp() {

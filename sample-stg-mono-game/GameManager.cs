@@ -52,7 +52,7 @@ public class GameManager : Singleton<GameManager> {
     void StateUpdate() {
         switch(state) {
             case GameState.standby:
-                Coroutine.Repeat(ref standbyCoroutine, StandbyCoroutine());
+                standbyCoroutine.Repeat(StandbyAction());
                 break;
 
             case GameState.play:
@@ -67,11 +67,11 @@ public class GameManager : Singleton<GameManager> {
                 break;
 
             case GameState.clear:
-                Coroutine.Repeat(ref clearCoroutine, ClearCoroutine());
+                clearCoroutine.Repeat(ClearAction());
                 break;
 
             case GameState.death:
-                Coroutine.Repeat(ref deathCoroutine, DeathCoroutine());
+                deathCoroutine.Repeat(DeathAction());
                 break;
 
             case GameState.gameover:
@@ -81,8 +81,8 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
-    IEnumerator standbyCoroutine;
-    IEnumerator StandbyCoroutine() {
+    Coroutine standbyCoroutine = new Coroutine();
+    IEnumerator StandbyAction() {
         Player p = pool.WakeUp(pool.player);
         p?.Translate(new Vector2(CONST.AREA.RIGHT / 2, CONST.AREA.BOTTOM));
 
@@ -90,21 +90,19 @@ public class GameManager : Singleton<GameManager> {
             yield return null;
         }
 
+        // 初期化
         target = 0;
 
-        //for(int i = 0; i < 8; ++i) {
-        //    Enemy e = pool.WakeUp(pool.enemys);
-        //    e?.Translate(new Vector2(100 * (i+1), 300));
-        //}
-
-        Enemy e = pool.WakeUp(pool.enemys);
-        e?.Translate(new Vector2(100 * (7 + 1), 300));
+        for(int i = 0; i < 8; ++i) {
+            Enemy e = pool.WakeUp(pool.enemys);
+            e?.Translate(new Vector2(100 * (i + 1), 300));
+        }
 
         state = GameState.play;
     }
 
-    IEnumerator clearCoroutine;
-    IEnumerator ClearCoroutine() {
+    Coroutine clearCoroutine = new Coroutine();
+    IEnumerator ClearAction() {
         for(int i = 0; i < 60; ++i) {
             yield return null;
         }
@@ -112,8 +110,8 @@ public class GameManager : Singleton<GameManager> {
         state = GameState.standby;
     }
 
-    IEnumerator deathCoroutine;
-    IEnumerator DeathCoroutine() {
+    Coroutine deathCoroutine = new Coroutine();
+    IEnumerator DeathAction() {
         --playerLeft;
 
         for(int i = 0; i < 60; ++i) {
