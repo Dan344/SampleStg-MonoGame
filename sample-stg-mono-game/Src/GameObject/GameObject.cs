@@ -88,16 +88,17 @@ public abstract class GameObject {
     public void Draw(SpriteBatch spriteBatch) {
         if(!isActive) return;
 
-        spriteBatch.Draw(sprite
-                         , position
-                         , null
-                         , spriteColor
-                         , ToRadians(rotation + (float)spriteFront)
-                         , new Vector2(sprite.Width / 2, sprite.Height / 2) //pivot
-                         , scale
-                         , spriteFlip
-                         , spriteDepth
-                        );
+        spriteBatch?.Draw(
+            sprite,
+            position,
+            null,
+            spriteColor,
+            ToRadians(rotation + (float)spriteFront),
+            new Vector2((sprite?.Width ?? 1) / 2, (sprite?.Height ?? 1) / 2), //pivot
+            scale,
+            spriteFlip,
+            spriteDepth
+        );
     }
 
     public abstract void Update();
