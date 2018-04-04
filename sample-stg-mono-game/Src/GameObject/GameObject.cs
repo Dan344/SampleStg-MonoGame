@@ -42,9 +42,9 @@ public abstract class GameObject {
 
     /// <summary>スプライトの正面を指定する</summary>
     public enum SpriteFront {
-        right  = 0,
-        top    = 90,
-        left   = 180,
+        right = 0,
+        top = 90,
+        left = 180,
         bottom = 270
     }
 
@@ -76,9 +76,14 @@ public abstract class GameObject {
     }
 
     /// <summary>poolから起こす時の初期化</summary>
-    public virtual void WakeUp() {
-        Init();
-        isActive = true;
+    public virtual T WakeUp<T>() where T : GameObject {
+        if(isActive) {
+            return null;
+        } else {
+            Init();
+            isActive = true;
+            return this as T;
+        }
     }
 
     /// <summary>

@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using Microsoft.Xna.Framework;
+using System.Collections;
 
 public class Enemy0 : Enemy {
     protected override void Init() {
-        hoge?.Reset();
         base.Init();
+        hoge?.Reset();
+
+        spriteColor = Color.Pink;
     }
 
     protected override IEnumerator NormalAction() {

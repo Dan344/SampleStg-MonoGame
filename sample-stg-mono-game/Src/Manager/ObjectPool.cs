@@ -96,12 +96,7 @@ public class ObjectPool : Singleton<ObjectPool> {
     /// <param name="gameObject">起こしたいオブジェクト</param>
     /// <returns>起こしたオブジェクト</returns>
     public T WakeUp<T>(T gameObject) where T : GameObject {
-        if(!gameObject.isActive) {
-            gameObject.WakeUp();
-            return gameObject;
-        } else {
-            return null;
-        }
+        return gameObject.WakeUp<T>();
     }
 
     /// <summary>渡したリストから寝ているオブジェクトを起こす。誰もいなければnull</summary>

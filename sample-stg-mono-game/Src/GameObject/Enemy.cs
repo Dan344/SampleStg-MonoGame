@@ -2,7 +2,8 @@
 using System;
 using System.Collections;
 
-public abstract class Enemy : CollisionObject {
+public class Enemy : CollisionObject {
+    /// <summary>破壊時に獲得可能な素点</summary>
     protected int score = 100;
 
     protected override void Init() {
@@ -12,24 +13,7 @@ public abstract class Enemy : CollisionObject {
     }
 
     public override void Update() {
-        //Coroutine.Repeat(ref normalAction, NormalAction());
-
         normalAction.Repeat(NormalAction());
-
-        //if(normalAction == null) {
-
-        //    //Console.WriteLine("hoge");
-        //    normalAction = NormalAction();
-        //}
-
-        //if(!normalAction?.MoveNext() ?? false) {
-        //    normalAction = null;
-        //}
-
-
-        //normalAction?.MoveNext();
-
-
         //Spin(1);
         //LookAtTarget(pool.player.position, 1);
         //System.Diagnostics.Debug.WriteLine((rotation));
@@ -47,11 +31,14 @@ public abstract class Enemy : CollisionObject {
     }
 
     Coroutine normalAction = new Coroutine();
-    protected abstract IEnumerator NormalAction();
+    protected virtual IEnumerator NormalAction() { yield break; }
 
-    public override void WakeUp() {
-        ++manager.target;
-        base.WakeUp();
+    public override T WakeUp<T>() {
+        T result = base.WakeUp<T>();
+
+        if(result != null) ++manager.target;
+
+        return result;
     }
 
     public override void Sleep() {
@@ -69,4 +56,6 @@ public abstract class Enemy : CollisionObject {
         manager.score += score;
         base.HitAction(other);
     }
+
+    public bool LookAtPlayer(float speed) => LookAtTarget(pool.player.position, speed);
 }

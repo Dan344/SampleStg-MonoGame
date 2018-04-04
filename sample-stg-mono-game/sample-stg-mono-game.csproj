@@ -43,6 +43,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Src\GameObject\Enemy\Enemy1.cs" />
     <Compile Include="Src\Manager\Coroutine.cs" />
     <Compile Include="Src\GameObject\Enemy.cs" />
     <Compile Include="Src\GameObject\EnemyBullet.cs" />
