@@ -1,19 +1,30 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
 
 public class Enemy : CollisionObject {
     /// <summary>破壊時に獲得可能な素点</summary>
     protected int score = 100;
 
+    /// <summary>動作</summary>
+    private EnemyAction<Enemy> action;
+
     protected override void Init() {
         score = 100;
-        normalAction?.Reset();
         base.Init();
     }
 
+    public EnemyAction<Enemy> SetAction<T>() where T : EnemyAction<Enemy>, new() {
+        return action = new T();
+    }
+
+    public void SetGraphic(Color color) {
+        spriteColor = color;
+    }
+
     public override void Update() {
-        normalAction.Repeat(NormalAction());
+        action?.Update();
+
         //Spin(1);
         //LookAtTarget(pool.player.position, 1);
         //System.Diagnostics.Debug.WriteLine((rotation));
@@ -30,9 +41,6 @@ public class Enemy : CollisionObject {
         //}
     }
 
-    Coroutine normalAction = new Coroutine();
-    protected virtual IEnumerator NormalAction() { yield break; }
-
     public override T WakeUp<T>() {
         T result = base.WakeUp<T>();
 
@@ -45,7 +53,7 @@ public class Enemy : CollisionObject {
         base.Sleep();
     }
 
-    protected virtual void Shot() {
+    public virtual void Shot() {
         var(degree, length) = ToTargetDegLen(pool.player.position);
         EnemyBullet eb = pool.WakeUp(pool.enemyBullets);
         eb?.Set(position, degree, length / 60); //必ず60フレームで到達する

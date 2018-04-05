@@ -1,22 +1,22 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System.Collections;
 
-public class Enemy0 : Enemy {
-    protected override void Init() {
-        base.Init();
+public class Enemy0Action : EnemyAction<Enemy> {
+    public override void Init(Enemy gameObject) {
         hoge?.Reset();
-
-        spriteColor = Color.Pink;
+        base.Init(gameObject);
     }
 
-    protected override IEnumerator NormalAction() {
+    public override IEnumerator NormalAction() {
         for(int i = 0; i < 30; ++i) {
-            MoveFront(6);
+            gameObject?.MoveFront(6);
             yield return null;
         }
 
         for(int i = 0; i < 10; ++i) {
-            LookAtTarget(pool.player.position, 10);
+            gameObject?.LookAtTarget(pool.player.position, 10);
             yield return null;
         }
 
@@ -26,14 +26,14 @@ public class Enemy0 : Enemy {
 
         for(int i = 0; i < 10; ++i) {
             if(i % 5 == 0) {
-                Shot();
+                gameObject?.Shot();
             }
 
             yield return null;
         }
 
         for(int i = 0; i < 10; ++i) {
-            LookAtTarget(pool.player.position, 10);
+            gameObject?.LookAtTarget(pool.player.position, 10);
             yield return null;
         }
     }
@@ -43,10 +43,11 @@ public class Enemy0 : Enemy {
     protected IEnumerator Hoge() {
         for(int i = 0; i < 100; ++i) {
             if(i % 2 == 0) {
-                Shot();
+                gameObject?.Shot();
             }
 
             yield return null;
         }
     }
+
 }

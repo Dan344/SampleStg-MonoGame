@@ -35,8 +35,8 @@ public class ObjectPool : Singleton<ObjectPool> {
             });
         }
 
-        for(int i = 0; i < 10; ++i) {
-            enemys.Add(new Enemy0 {
+        for(int i = 0; i < 55; ++i) {
+            enemys.Add(new Enemy {
                 sprite = sampleTexture,
                 spriteColor = Color.Red,
                 spriteFront = GameObject.SpriteFront.top
@@ -115,7 +115,6 @@ public class ObjectPool : Singleton<ObjectPool> {
         return result;
     }
 
-
     /// <summary>該当オブジェクトを全てスリープする</summary>
     /// <typeparam name="T">GameObjectの派生クラス</typeparam>
     /// <param name="obj">寝かせたいオブジェクト</param>
@@ -145,4 +144,6 @@ public class ObjectPool : Singleton<ObjectPool> {
             gameObject.Draw(spriteBatch);
         }
     }
+
+
 }

@@ -95,6 +95,15 @@ public class GameManager : Singleton<GameManager> {
 
         for(int i = 0; i < 8; ++i) {
             Enemy e = pool.WakeUp(pool.enemys);
+
+            if(i % 2 == 0) {
+                e?.SetAction<Enemy0Action>()?.Init(e);
+                e?.SetGraphic(Color.Red);
+            } else {
+                e?.SetAction<Enemy1Action>()?.Init(e);
+                e?.SetGraphic(Color.Pink);
+            }
+
             e?.Translate(new Vector2(100 * (i + 1), 300));
         }
 

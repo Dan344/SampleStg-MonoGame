@@ -43,11 +43,13 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Src\GameObject\Enemy\Enemy1.cs" />
+    <Compile Include="Src\Action\Enemy1Action.cs" />
+    <Compile Include="Src\Action\Enemy0Action.cs" />
+    <Compile Include="Src\Action\BaseAction.cs" />
+    <Compile Include="Src\Action\EnemyAction.cs" />
     <Compile Include="Src\Manager\Coroutine.cs" />
     <Compile Include="Src\GameObject\Enemy.cs" />
     <Compile Include="Src\GameObject\EnemyBullet.cs" />
-    <Compile Include="Src\GameObject\Enemy\Enemy0.cs" />
     <Compile Include="Src\Game1.cs" />
     <Compile Include="Src\GameObject\CollisionObject.cs" />
     <Compile Include="Src\Manager\GameManager.cs" />
