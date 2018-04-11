@@ -14,8 +14,18 @@ public class Enemy : CollisionObject {
         base.Init();
     }
 
+    /// <summary>
+    /// 指定の行動(action)を新規にセットする。
+    /// 指定のactionが既にセットされていたら再利用する。
+    /// </summary>
+    /// <typeparam name="T">actionの型</typeparam>
+    /// <returns>セットされているactionを返す</returns>
     public EnemyAction<Enemy> SetAction<T>() where T : EnemyAction<Enemy>, new() {
-        return action = new T();
+        if(action is T) {
+            return action;
+        } else {
+            return action = new T();
+        }
     }
 
     public void SetGraphic(Color color) {

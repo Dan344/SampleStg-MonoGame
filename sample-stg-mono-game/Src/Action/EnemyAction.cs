@@ -13,8 +13,5 @@ public abstract class EnemyAction<T> : BaseAction<Enemy> {
 
     public override void Update() {
         normalAction.Repeat(NormalAction());
-        System.Console.WriteLine("hoge");
     }
-
-
 }
