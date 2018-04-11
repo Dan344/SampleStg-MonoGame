@@ -12,7 +12,7 @@ public class Player : CollisionObject {
     /// 毎フレーム呼ぶ
     /// </summary>
     public override void Update() {
-        ControleMove();
+        ControlMove();
         Shot();
     }
 
@@ -30,7 +30,7 @@ public class Player : CollisionObject {
     /// <summary>
     /// ユーザの入力に応じて移動する
     /// </summary>
-    public void ControleMove() {
+    public void ControlMove() {
         base.Move(input.normalizedVector * speed);
 
         Vector2 limit = position;
