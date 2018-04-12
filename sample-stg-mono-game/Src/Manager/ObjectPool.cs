@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -11,7 +10,7 @@ public class ObjectPool : Singleton<ObjectPool> {
     public List<CollisionObject> explosions { get; private set; }
     public List<CollisionObject> items { get; private set; }
 
-    public Texture2D sampleTexture;
+    SpriteManager sprite;
 
     public ObjectPool() {
         playerBullets = new List<PlayerBullet>();
@@ -19,25 +18,27 @@ public class ObjectPool : Singleton<ObjectPool> {
         enemyBullets = new List<EnemyBullet>();
         explosions = new List<CollisionObject>();
         items = new List<CollisionObject>();
+
+        sprite = SpriteManager.instance;
     }
 
     /// <summary>ObjectPoolで管理するオブジェクトを用意する</summary>
     public void Initialize() {
         player = new Player {
-            sprite = sampleTexture,
+            sprite = sprite.Get(SpriteManager.Sprite.Player),
             spriteColor = Color.Green
         };
 
         for(int i = 0; i < 4; ++i) {
             playerBullets.Add(new PlayerBullet {
-                sprite = sampleTexture,
+                sprite = sprite.Get(SpriteManager.Sprite.ArrowBullet),
                 spriteColor = Color.Aqua
             });
         }
 
         for(int i = 0; i < 55; ++i) {
             enemys.Add(new Enemy {
-                sprite = sampleTexture,
+                sprite = sprite.Get(SpriteManager.Sprite.ArrowBullet),
                 spriteColor = Color.Red,
                 spriteFront = GameObject.SpriteFront.top
             });
@@ -45,17 +46,11 @@ public class ObjectPool : Singleton<ObjectPool> {
 
         for(int i = 0; i < 2000; ++i) {
             enemyBullets.Add(new EnemyBullet {
-                sprite = sampleTexture,
+                sprite = sprite.Get(SpriteManager.Sprite.VecBullet),
                 spriteColor = Color.Yellow,
                 spriteFront = GameObject.SpriteFront.top
             });
         }
-    }
-
-    /// <summary>objectPoolで使用するContentを読み込む</summary>
-    /// <param name="Content"></param>
-    public void LoadContent(ContentManager Content) {
-        sampleTexture = Content.Load<Texture2D>("Sprite/ArrowBullet");
     }
 
     /// <summary>渡したオブジェクトのUpdate()を呼ぶ</summary>

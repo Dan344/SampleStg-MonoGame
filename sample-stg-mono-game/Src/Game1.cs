@@ -10,15 +10,12 @@ namespace sample_stg_mono_game {
         Input input;
         ObjectPool pool;
         GameManager manager;
-        SpriteFont debugFont;
-        Texture2D sampleTexture;
+        SpriteManager sprite;
         SequenceManager sequence;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             sequence = new SequenceManager();
-
-            Content.RootDirectory = "Content";
 
             graphics.PreferredBackBufferWidth = CONST.AREA.W;
             graphics.PreferredBackBufferHeight = CONST.AREA.H;
@@ -26,6 +23,8 @@ namespace sample_stg_mono_game {
             input = Input.instance;
             pool = ObjectPool.instance;
             manager = GameManager.instance;
+            sprite = SpriteManager.instance;
+            sprite?.SetContentManager(Content);
 
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
         }
@@ -33,9 +32,6 @@ namespace sample_stg_mono_game {
         /// <summary>contentのロード。Initialize()より早く呼ばれる</summary>
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            debugFont = Content.Load<SpriteFont>("Debug");
-            sampleTexture = Content.Load<Texture2D>("Sprite/ArrowBullet");
-            pool.LoadContent(Content);
         }
 
         /// <summary>初期化</summary>
@@ -128,21 +124,21 @@ namespace sample_stg_mono_game {
         void SplashDraw() {
             GraphicsDevice.Clear(Color.Red);
             spriteBatch.Begin();
-            spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(sprite.Get(SpriteManager.Font.Debug), debug, Vector2.Zero, Color.White);
             spriteBatch.End();
         }
 
         void TitleDraw() {
             GraphicsDevice.Clear(Color.BlueViolet);
             spriteBatch.Begin();
-            spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(sprite.Get(SpriteManager.Font.Debug), debug, Vector2.Zero, Color.White);
             spriteBatch.End();
         }
 
         void GameDraw() {
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-            spriteBatch.DrawString(debugFont, debug, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(sprite.Get(SpriteManager.Font.Debug), debug, Vector2.Zero, Color.White);
             pool.Draw(pool.playerBullets, spriteBatch);
             pool.Draw(pool.player, spriteBatch);
             pool.Draw(pool.enemyBullets, spriteBatch);

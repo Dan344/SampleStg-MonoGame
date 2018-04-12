@@ -18,9 +18,11 @@ public class GameManager : Singleton<GameManager> {
     public int playerLeft { get; set; } = 6;
 
     private ObjectPool pool;
+    private SpriteManager sprite;
 
     public GameManager() {
         pool = ObjectPool.instance;
+        sprite = SpriteManager.instance;
     }
 
     public enum GameState {
@@ -98,10 +100,10 @@ public class GameManager : Singleton<GameManager> {
 
             if(i % 2 == 0) {
                 e?.SetAction<Enemy0Action>()?.Init(e);
-                e?.SetGraphic(Color.Red);
+                e?.SetGraphic(sprite.Get(SpriteManager.Sprite.BirdA), Color.Red);
             } else {
                 e?.SetAction<Enemy1Action>()?.Init(e);
-                e?.SetGraphic(Color.Pink);
+                e?.SetGraphic(sprite.Get(SpriteManager.Sprite.ArrowBullet), Color.Pink);
             }
 
             e?.Translate(new Vector2(100 * (i + 1), 300));

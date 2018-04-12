@@ -28,7 +28,8 @@ public class Enemy : CollisionObject {
         }
     }
 
-    public void SetGraphic(Color color) {
+    public void SetGraphic(Texture2D sprite, Color color) {
+        this.sprite = sprite;
         spriteColor = color;
     }
 

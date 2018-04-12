@@ -58,6 +58,7 @@
     <Compile Include="Src\Manager\ObjectPool.cs" />
     <Compile Include="Src\GameObject\Player.cs" />
     <Compile Include="Src\GameObject\PlayerBullet.cs" />
+    <Compile Include="Src\Manager\SpriteManager.cs" />
     <Compile Include="Src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\CONST.cs" />
